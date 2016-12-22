@@ -6,7 +6,7 @@ form {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: absolute;
   left: 10px;
-  top: 60px;
+  top: 100px;
 }
 
 label {
@@ -42,14 +42,17 @@ div.l1 {
  }
 
 </style>
-<h3> <center> Quem acha que respondeu o form de maneira mais aleatória do que se considera?</center></h3>
-<form> 
-  <label><input type="radio" name="mode" value="grouped"> Agrupar</label>
-  <label><input type="radio" name="mode" value="stacked" checked> Empilhar</label>
-</form>
-<svg width="960" height="500"></svg>
-<div class="l1"></div><p class="l1">Quão aleatório você acha que foi</p>
-<div class="l2"></div><p class="l2">Quão aleatório você acha que você é</p>
+<body background="2.jpg">
+	<h2> <center> Quem acha que respondeu o form de maneira mais aleatória do que se considera?</center></h2>
+	<form> 
+	  <label><input type="radio" name="mode" value="grouped"> Agrupar</label>
+	  <label><input type="radio" name="mode" value="stacked" checked> Empilhar</label>
+	</form>
+	<svg width="960" height="500"></svg>
+	<div class="l1"></div><p class="l1">Quão aleatório você acha que foi</p>
+	<div class="l2"></div><p class="l2">Quão aleatório você acha que você é</p>
+  <a href="https://github.com/diogoflorencio/Visualizacao-de-Dados-/blob/master/lab2/data.csv">fonte de dados</a>
+</body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var dataset = []
