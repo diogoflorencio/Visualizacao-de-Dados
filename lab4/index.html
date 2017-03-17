@@ -52,7 +52,7 @@
       var municipios = topojson.feature(br, br.objects.municipios_sab);
 
       color
-      	.domain([d3.min(municipios.features, function(d){ return +d.properties.ID; }), d3.max(municipios.features, function(d){ return +d.properties.ID;})])
+      	.domain([d3.min(dados_csv, function(d){ return +d.AREA_KM2; }), d3.max(dados_csv, function(d){ return +d.AREA_KM2;})])
     		.range(d3.schemeReds[6]);
 
         svg.selectAll(".municipios")
@@ -64,7 +64,7 @@
 
     	for (var i = 0; i < dados_csv.length; i++) {
 				svg.select("#ID-"+dados_csv[i].GEOCODIGO)
-					.attr("fill", color(+dados_csv[i].GEOCODIGO));
+					.attr("fill", color(+dados_csv[i].AREA_KM2));
 		}
 
     }
