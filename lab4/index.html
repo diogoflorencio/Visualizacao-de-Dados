@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<title>D3</title>
+	</style>
+</head>
+<body>
+	<div class="container">
+		<header><h1>LAB 4</h1></header>
+		<div id="chart"></div>
+	</div>
+
+	<!-- scripts -->
+  	<script src="js/d3.v4.min.js"></script>
+	<script src="//d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  	<script src="//d3js.org/topojson.v1.min.js"></script>
+	<script>
+		var
+		    width = 1000,
+		    height = 600;
+
+		var svg = d3.select("#chart")
+				.append("svg")
+				.attr('version', '1.1')
+				.attr('viewBox', '-160 90 '+width+' '+height)
+				.attr('width', '100%')
+				.attr('class', 'map-chart');
+
+    var projection = d3.geoAlbers()
+        .center([-36.820037, -7.195265])
+        .rotate([0, 0])
+        .parallels([0, 0])
+        .scale(2000);
+
+    var path = d3.geoPath().projection(projection);
+
+    var color = d3.scaleLinear();
+
+    d3.json("municipios_sab.json", function(error, br) {
+      if (error) throw error;
+
+      var municipios = topojson.feature(br, br.objects.municipios_sab);
+
+      color
+      	.domain([d3.min(municipios.features, function(d){ return +d.properties.ID; }), d3.max(municipios.features, function(d){ return +d.properties.ID; })])
+    		.range(d3.schemeOranges[5]);
+
+        svg.selectAll(".municipio")
+        .data(municipios.features)
+      	.enter().append("path")
+        .attr("d", path)
+        .attr("fill", function(d){ return color(+d.properties.ID)});
+
+    });
+		</script>
+
+</body>
+</html>
