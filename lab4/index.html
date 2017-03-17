@@ -41,22 +41,33 @@
 
     var color = d3.scaleLinear();
 
-    d3.json("municipios_sab.json", function(error, br) {
+    d3.queue()
+			.defer(d3.json, "municipios_sab.json")
+			.defer(d3.csv, "municipios_sab.csv")
+			.await(draw);
+
+     function draw(error, br, dados_csv) {
       if (error) throw error;
 
       var municipios = topojson.feature(br, br.objects.municipios_sab);
 
       color
-      	.domain([d3.min(municipios.features, function(d){ return +d.properties.ID; }), d3.max(municipios.features, function(d){ return +d.properties.ID; })])
-    		.range(d3.schemeOranges[5]);
+      	.domain([d3.min(municipios.features, function(d){ return +d.properties.ID; }), d3.max(municipios.features, function(d){ return +d.properties.ID;})])
+    		.range(d3.schemeReds[6]);
 
-        svg.selectAll(".municipio")
+        svg.selectAll(".municipios")
         .data(municipios.features)
-      	.enter().append("path")
+        .enter().append("path")
+        .attr("id", function(d) { console.log(+d.properties.ID);return "ID-"+d.properties.ID;})
         .attr("d", path)
-        .attr("fill", function(d){ return color(+d.properties.ID)});
+        .style("opacity", 1);
 
-    });
+    	for (var i = 0; i < dados_csv.length; i++) {
+				svg.select("#ID-"+dados_csv[i].GEOCODIGO)
+					.attr("fill", color(+dados_csv[i].GEOCODIGO));
+		}
+
+    }
 		</script>
 
 </body>
