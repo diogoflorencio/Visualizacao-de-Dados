@@ -20,6 +20,14 @@
         padding-top: 70px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
+
+    div.descricao {
+        width:25%;
+        height:80%;
+        position: absolute;
+        left: 70%;
+        top: 50%; 
+    }
     </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -69,20 +77,84 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>A Bootstrap Starter Template</h1>
-                <p class="lead">Complete with pre-defined file paths that you won't have to change!!</p>
-                <ul class="list-unstyled">
-                    <li>Bootstrap v3.3.7</li>
-                    <li>jQuery v1.11.1</li>
-                </ul>
+                <h1>Interrupções no Fornecimento de Água</h1>
+
             </div>
         </div>
         <!-- /.row -->
+        <div class="descricao"> 
+            <p class="lead">A visualização exibe a quantidade de interrupções no fornecimento de água em cada município do sertão. Para isto, foi utilizada uma escala de cores, onde quanto mais quente for a cor do município, maior a quantidade de interrupções em seu fornecimento de água. A cor cinza representa a falta de dados sobre o município.</p>
+        </div>
+        <div id="chart"></div>
         
     </div>
     <!-- /.container -->
 
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- scripts -->
+    <script src="js/d3.v4.min.js"></script>
+    <script src="//d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script>
+        var
+            width = 1000,
+            height = 600;
+
+        var svg = d3.select("#chart")
+                .append("svg")
+                .attr('version', '1.1')
+                .attr('viewBox', '0 80 '+width+' '+height)
+                .attr('width', '100%')
+                .attr('class', 'map-chart');
+
+    var projection = d3.geoAlbers()
+        .center([-36.820037, -7.195265])
+        .rotate([0, 0])
+        .parallels([0, 0])
+        .scale(2000);
+
+    var path = d3.geoPath().projection(projection);
+
+    var color = d3.scaleLinear();
+
+    d3.queue()
+            .defer(d3.json, "municipios_sab.json")
+            .defer(d3.csv, "dados/info_qualidade.csv")
+            .await(draw);
+
+     function draw(error, br, dados_csv) {
+      if (error) throw error;
+
+      var variavel = "paralisacoes"
+
+      var municipios = topojson.feature(br, br.objects.municipios_sab);
+
+      color
+        .domain([100, 30, 20, 10, 0])
+            .range(['#d73027','#fc8d59','#fee08b','#87CEEB','#ADD8E6']);
+        
+        svg.selectAll(".municipios")
+        .data(municipios.features)
+        .enter().append("path")
+        .attr("id", function(d) {return "municipio-"+d.properties.ID;})
+        .attr("d", path)
+        .style("opacity", 0.8);
+
+        for (var i = 0; i < dados_csv.length; i++) {
+                svg.select("#municipio-"+dados_csv[i].GEOCODIGO)
+                    .attr("fill", function (){  
+                                    if (isNaN(dados_csv[i].paralisacoes)) return "#D3D3D3"; 
+                                    return color(+dados_csv[i].paralisacoes)
+                                  });
+        }
+
+    }
+        </script>
+
 </body>
+
 </html>
