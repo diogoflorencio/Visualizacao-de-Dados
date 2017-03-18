@@ -19,6 +19,7 @@
     body {
         padding-top: 70px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        background: #FFFFE0;
     }
 
     div.descricao {
@@ -26,7 +27,7 @@
         height:80%;
         position: absolute;
         left: 70%;
-        top: 50%; 
+        top: 30%; 
     }
     </style>
 
@@ -77,13 +78,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>Interrupções no Fornecimento de Água</h1>
+                <h1>Volume de Água Tratada [m³/ano]</h1>
 
             </div>
         </div>
         <!-- /.row -->
         <div class="descricao"> 
-            <p class="lead">A visualização exibe a quantidade de interrupções no fornecimento de água em cada município do sertão. Para isto, foi utilizada uma escala de cores, onde quanto mais quente for a cor do município, maior a quantidade de interrupções em seu fornecimento de água. A cor cinza representa a falta de dados sobre o município.</p>
+            <p class="lead">A visualização exibe o volume de água tratada pelos municípios do sertão, ao longo de um ano. Os municípios com maior volume de da água tratada estão destacados em tons de azul. Já os municípios com menor volume de água tratada, estão destacados em tons de vermelho. A cor cinza representa a falta de dados sobre o município.</p>
         </div>
         <div id="chart"></div>
         
@@ -123,19 +124,17 @@
 
     d3.queue()
             .defer(d3.json, "municipios_sab.json")
-            .defer(d3.csv, "dados/info_qualidade.csv")
+            .defer(d3.csv, "dados/info_agua.csv") // unidade (1000m/ano)
             .await(draw);
 
      function draw(error, br, dados_csv) {
       if (error) throw error;
 
-      var variavel = "paralisacoes"
-
       var municipios = topojson.feature(br, br.objects.municipios_sab);
 
       color
-        .domain([100, 30, 20, 10, 0])
-            .range(['#d73027','#fc8d59','#fee08b','#87CEEB','#ADD8E6']);
+        .domain([50, 100, 250, 500, 1000, 2000, 3000])
+            .range(['#d73027','#fc8d59','#fee08b','#87CEEB','#ADD8E6','#00BFFF']);
         
         svg.selectAll(".municipios")
         .data(municipios.features)
@@ -147,8 +146,8 @@
         for (var i = 0; i < dados_csv.length; i++) {
                 svg.select("#municipio-"+dados_csv[i].GEOCODIGO)
                     .attr("fill", function (){  
-                                    if (isNaN(dados_csv[i].paralisacoes)) return "#D3D3D3"; 
-                                    return color(+dados_csv[i].paralisacoes)
+                                    if (isNaN(dados_csv[i].volume_de_agua_tratada)) return "#708090"; 
+                                    return color(+dados_csv[i].volume_de_agua_tratada)
                                   });
         }
 

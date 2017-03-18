@@ -19,6 +19,7 @@
     body {
         padding-top: 70px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        background: #FFFFE0;
     }
 
     div.descricao {
@@ -26,7 +27,7 @@
         height:80%;
         position: absolute;
         left: 70%;
-        top: 50%; 
+        top: 60%; 
     }
     </style>
 
@@ -128,8 +129,6 @@
 
      function draw(error, br, dados_csv) {
       if (error) throw error;
-
-      var variavel = "paralisacoes"
 
       var municipios = topojson.feature(br, br.objects.municipios_sab);
 

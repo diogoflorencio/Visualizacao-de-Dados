@@ -19,14 +19,15 @@
     body {
         padding-top: 70px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        background: #FFFFE0;
     }
 
     div.descricao {
         width:25%;
         height:80%;
         position: absolute;
-        left: 70%;
-        top: 50%; 
+        left: 10%;
+        top: 30%; 
     }
     </style>
 
@@ -77,13 +78,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>Interrupções no Fornecimento de Água</h1>
+                <h1>Percentual de Perdas na Distribuição de Água</h1>
 
             </div>
         </div>
         <!-- /.row -->
         <div class="descricao"> 
-            <p class="lead">A visualização exibe a quantidade de interrupções no fornecimento de água em cada município do sertão. Para isto, foi utilizada uma escala de cores, onde quanto mais quente for a cor do município, maior a quantidade de interrupções em seu fornecimento de água. A cor cinza representa a falta de dados sobre o município.</p>
+            <p class="lead">A visualização exibe, por meio de uma escala de cores o desperdício na distribuição de água em cada município do sertão. Municípios que desperdiçam em torno de 45% da água estão destacados em tons de vermelho, onde quanto mais intensa a cor, mais se desperdiça. Municípios que desperdiçam em torno de 30% estão destacados em amarelo suave / claro. Municípios que desperdiçam em torno de 15% estão destacados  em tons de verde, onde quanto mais intensa a cor, menos se desperdiça. A cor cinza representa a falta de dados sobre o município.</p>
         </div>
         <div id="chart"></div>
         
@@ -107,7 +108,7 @@
         var svg = d3.select("#chart")
                 .append("svg")
                 .attr('version', '1.1')
-                .attr('viewBox', '0 80 '+width+' '+height)
+                .attr('viewBox', '-400 80 '+width+' '+height)
                 .attr('width', '100%')
                 .attr('class', 'map-chart');
 
@@ -123,19 +124,17 @@
 
     d3.queue()
             .defer(d3.json, "municipios_sab.json")
-            .defer(d3.csv, "dados/info_qualidade.csv")
+            .defer(d3.csv, "dados/indicadores_operacionais_agua.csv")
             .await(draw);
 
      function draw(error, br, dados_csv) {
       if (error) throw error;
 
-      var variavel = "paralisacoes"
-
       var municipios = topojson.feature(br, br.objects.municipios_sab);
 
       color
-        .domain([100, 30, 20, 10, 0])
-            .range(['#d73027','#fc8d59','#fee08b','#87CEEB','#ADD8E6']);
+        .domain([50, 40, 30, 20, 10])
+            .range(['#d73027','#fc8d59','#fee08b','#a6d96a','#1a9641']);
         
         svg.selectAll(".municipios")
         .data(municipios.features)
@@ -147,11 +146,10 @@
         for (var i = 0; i < dados_csv.length; i++) {
                 svg.select("#municipio-"+dados_csv[i].GEOCODIGO)
                     .attr("fill", function (){  
-                                    if (isNaN(dados_csv[i].paralisacoes)) return "#D3D3D3"; 
-                                    return color(+dados_csv[i].paralisacoes)
+                                    if (isNaN(dados_csv[i].percentual_perdas_na_distribuicao)) return "#D3D3D3"; 
+                                    return color(+dados_csv[i].percentual_perdas_na_distribuicao)
                                   });
         }
-
     }
         </script>
 
