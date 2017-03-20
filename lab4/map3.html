@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -26,8 +26,8 @@
         width:25%;
         height:80%;
         position: absolute;
-        left: 70%;
-        top: 30%; 
+        left: 65%;
+        top: 40%; 
     }
     </style>
 
@@ -84,7 +84,7 @@
         </div>
         <!-- /.row -->
         <div class="descricao"> 
-            <p class="lead">A visualização exibe o volume de água tratada pelos municípios do sertão, ao longo de um ano. Os municípios com maior volume de da água tratada estão destacados em tons de azul. Já os municípios com menor volume de água tratada, estão destacados em tons de vermelho. A cor cinza representa a falta de dados sobre o município.</p>
+            <p class="lead">A visualização exibe o volume de água tratada pelos municípios do sertão, ao longo de um ano. Os municípios com maior volume de da água tratada estão destacados em tons de azul,onde quanto mais intensa a cor, maior o volume. Já os municípios com menor volume de água tratada, estão destacados em tons de vermelho,onde quanto mais intensa a cor, menor o volume de água tratada. A cor cinza representa a falta de dados sobre o município.</p>
         </div>
         <div id="chart"></div>
         
@@ -108,7 +108,7 @@
         var svg = d3.select("#chart")
                 .append("svg")
                 .attr('version', '1.1')
-                .attr('viewBox', '0 80 '+width+' '+height)
+                .attr('viewBox', '90 80 '+width+' '+height)
                 .attr('width', '100%')
                 .attr('class', 'map-chart');
 
