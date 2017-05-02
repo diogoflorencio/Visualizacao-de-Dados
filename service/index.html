@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 650px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+       
+        var home = {lat: -37.737116, lng: 144.99858};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: home
+        });
+        
+        var infowindow = [];
+        var markers = [];
+        var locations = [ [],
+                          ['First Shoppe', -37.808204, 144.855579],
+                          ['Second Shoppe', -37.675648, 145.026125],
+                          ['Third Shoppe', -37.816935, 144.966877],
+                          ['Fourth Shoppe', -37.818714, 145.036494],
+                          ['Fifth Shoppe', -37.793834, 144.987018],
+                          ['Sixth Shoppe', -37.737116, 144.998581],
+                          ['Seventh Shoppe', -37.765528, 144.922624]
+                        ];
+
+        for (var i = 0; i < locations.length; i++) {  
+          markers[i] = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            title: locations[i][0],
+            map: map,
+            label: (i).toString()
+          });
+
+          infowindow[i] = new google.maps.InfoWindow({
+            content: locations[i][0],
+            position: markers[i].getPosition()
+          });
+
+          markers[i].addListener('click', function() {
+           infowindow[Number(this.getLabel())].open(map, markers[i]);
+          });
+        }
+      }
+      
+      d3.json("data.json", function(error, data) {
+         if (error) throw error;
+      }
+    </script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNKV_WgjEB_ipZLPVkxaxPOQsBVN3Mzec&callback=initMap">
+    </script>
+  </body>
+</html>
