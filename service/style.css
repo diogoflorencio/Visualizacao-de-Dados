@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100%;
+}
+
+#dateInput{
+    position: absolute;
+    top:9px;
+    left:7.9%;
+    height:27px;
+    width:129px;
+}
