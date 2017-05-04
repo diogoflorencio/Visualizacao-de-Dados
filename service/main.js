@@ -10,6 +10,12 @@ function initMap() {
         zoom: 16,
         center: home
   });
+
+  var centerControlDiv = document.getElementById('dateInput');
+
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.LEFT_TOP].push(centerControlDiv);
+
   loadingData();
 }
 
