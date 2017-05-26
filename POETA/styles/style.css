@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 body {
-	
+
     margin: 0;
     font-size: 14px;
     font-family: "Helvetica Neue", Helvetica;
@@ -63,7 +63,7 @@ body {
 }
 
 rect {
-    
+
     pointer-events: all;
 }
 
@@ -136,7 +136,7 @@ div.tooltip {
     pointer-events: none;
     background: #FFFFEF;
     width: 400px;
-    height: 135px;
+    height: 150px;
     padding: 10px;
     border: 1px solid #D5D5D5;
     font-family: arial,helvetica,sans-serif;
@@ -154,10 +154,10 @@ div.tooltip {
 
 div.tooltipTail {
     position: absolute;
-    left:-7px;
-    top: 72px;
-    width: 7px;
-    height: 13px;
+    left:213px;
+    top: -7px;
+    width: 13px;
+    height: 7px;
     background: url("../images/tail_white.png") 50% 0%;
 }
 

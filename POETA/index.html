@@ -29,13 +29,14 @@
 <head>
     <meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    
+
     <title>POETA UFCG</title>
     <link type="text/css" rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="styles/menu_lateral1.css">
     <link rel="stylesheet" href="styles/balao.css">
+    <link rel="icon" href="images/favicon.png">
 
 	<script type="text/javascript" src="scripts/loader.js"></script>
     <script type="text/javascript" src="scripts/d3.min.js"></script>
@@ -49,8 +50,9 @@
 </head>
 
 <body onload="main()">
-<div id="body" style="position: absolute; top:80px">
+<div id="body" style="position: absolute; top:100px;">
     <div id="toolTip" class="tooltip" style="opacity:0;">
+      <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i> Prazos</a>
         <div id="head" class="header"></div>
         <div id="header1" class="header1"></div>
         <div id="header2" class="header2"></div>
@@ -101,7 +103,7 @@
 				<li><a href="#"><i class="fa fa-search "></i></a></li>
 				<!-- <li><a href="#"><i class="fa fa-edit "></i></a></li> -->
 				<li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i></a></li>
-	
+
 			</ul>
 		</div>
 		<div class="text">
@@ -117,7 +119,7 @@
 		</div>
 		<div class="info">
 			<div>
-			<p><input id="chck_dlt" id="faixa" type="checkbox" name="filtro" onclick="setar_opcoes('daltonico')"> 
+			<p><input id="chck_dlt" id="faixa" type="checkbox" name="filtro" onclick="setar_opcoes('daltonico')">
 			Usuário daltônico</p>
 			<p><input id="chck_fx" id="faixa" type="checkbox" name="filtro" onclick="setar_opcoes('faixa_etaria')"> Faixa etária</p>
 			de  <input class="info2" id="textDe" type="text" name="de" size="3">  até  <input class="info2" id="textAte" type="text" name="ate" size="3">
