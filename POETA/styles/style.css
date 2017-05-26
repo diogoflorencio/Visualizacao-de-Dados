@@ -399,3 +399,9 @@ div.tooltipGraf2 {
   top: 100%;
   left: 0;
 }
+
+.modo_pesquisa {
+  position: absolute;
+  top: 0px;
+  left: 40%;
+}
