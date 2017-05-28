@@ -23,3 +23,11 @@
     bottom: -20px;
     left: 20%;
 }
+
+.qtdDesistentes{
+  width: 130px;
+  height: 19px;
+  position: relative;
+  background: transparent;
+  color: black;
+}

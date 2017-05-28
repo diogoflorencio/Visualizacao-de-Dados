@@ -1,7 +1,7 @@
 function converteData(data){
 	 return new Date(Number(data.slice(6,10)), Number(data.slice(3,5)), Number(data.slice(0,2)));
  }
- 
+
      function removeEmptyNodes(node,parent,id) {
 		if(!node.values) return
         if(node.key === ""){
@@ -20,10 +20,10 @@ function converteData(data){
 			if(node.values[i].key === "") i--;
 		}
     }
-    
+
     var nos_apagados = [];
     var opcoes = [false, true, true, true, true, true, true, false];
-    
+
     function setar_opcoes(op){
 		switch (op){
 			case "faixa_etaria":
@@ -52,9 +52,9 @@ function converteData(data){
 				break;
 		}
 	}
-    
+
     function filtrar(){
-		//console.log(root);	
+		//console.log(root);
 		if(opcoes[7]) {
 			escala = d3.scale.linear().range(coresDaltonico);
 			escalaNota = d3.scale.linear().range(coresDaltonico);
@@ -74,14 +74,14 @@ function converteData(data){
 				|| !opcoes[4] && folhas[i]["estadoCivil"]==="CASADO"
 				|| !opcoes[5] && folhas[i]["escola"]==="PUBLICA"
 				|| !opcoes[6] && folhas[i]["escola"]==="PARTICULAR"){
-				
-				
+
+
 				if(folhas[i].parent.children == null){
 					folhas[i].parent.children = folhas[i].parent._children;
 					folhas[i].parent._children = null;
 				}
 				var filhos = folhas[i].parent.children;
-				
+
 				for(var j=0; j < filhos.length; j++){
 					if (filhos[j] === folhas[i]){
 						nos_apagados.push([filhos[j],j]);
@@ -90,7 +90,7 @@ function converteData(data){
 					}
 				}
 			}
-			
+
 			else if(opcoes[0]){
 				var de = document.getElementById("textDe");
 				var ate = document.getElementById("textAte");
@@ -108,7 +108,7 @@ function converteData(data){
 		}
 		update(root);
 	}
-	
+
 	function recuperarNosFiltrados(){
 		var pai;
 		for(var i=nos_apagados.length-1; i >= 0; i--){
@@ -119,7 +119,7 @@ function converteData(data){
 				|| opcoes[5] && nos_apagados[i][0]["escola"]==="PUBLICA"
 				|| opcoes[6] && nos_apagados[i][0]["escola"]==="PARTICULAR"
 				){
-					
+
 					pai = nos_apagados[i][0].parent;
 					if(pai.children == null){
 						pai.children = pai._children;
@@ -130,7 +130,7 @@ function converteData(data){
 				}
 		}
 	}
-    
+
     function setAnimacao(nodes) {
         for (var y = 0; y < nodes.length; y++) {
             var node = nodes[y];
@@ -152,10 +152,10 @@ function converteData(data){
                     }
                }
           }
-        
+
        }
     }
-    
+
     function getLeafs(node,leafs){
 		var childrens;
 		if(node.children){
@@ -178,54 +178,60 @@ function converteData(data){
 			leafs.push(node);
 		}
 	}
-	
+
 	function colocarBalao(node){
 		if(!node.children){
 			return;
 		}
-		
+
 		if(typeof node[campo[3]] != "undefined"){
 			if(node[campo[3]] > 0){
 				var qntBaloes = d3.selectAll(document.getElementsByName("balao"))[0].length;
-				
+
 				d3.select(document.getElementById("body")).append("div")
 						.attr("name","balao")
 						.attr("class","balao2")
 						.style("left", (node.y+68)+"px")
 						.style("top", (node.x-949-62*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
+				d3.select(document.getElementById("body")).append("h1")
+						.attr("name","balao")
+						.attr("class","qtdDesistentes")
+						.style("left", (node.y+54)+"px")
+						.style("top", (node.x-1146-62*qntBaloes)+"px")
+						.text(node[campo[3]]);
 			}
 		}
 		for(var i = 0; i < node.children.length; i++){
 			colocarBalao(node.children[i]);
 		}
 	}
-	
+
 	function removerBalao(){
 		d3.selectAll(document.getElementsByName("balao")).remove();
 	}
 
 
 function esconderGrafico(d) {
-			
+
 					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "0")
 					.transition()
 					.duration(0)
 					.style("top","-1000px");
-				
+
 					 toolTip.transition()
 					.duration(200)
 					.style("opacity", "0");
-				
+
 					toolTipGrafTempo.transition()
 					.duration(200)
 					.style("opacity", "0")
 					.transition()
 					.duration(0)
 					.style("top","-1000px");
-				
+
 					toolTipAluno.transition()
 					.duration(200)
 					.style("opacity", "0")
@@ -233,44 +239,44 @@ function esconderGrafico(d) {
 					.duration(0)
 					.style("top","-1000px");
 					apagaGrafBarras();
-			
+
             d3.select(labels[d.key]).transition().style("font-weight","normal").style("font-size","12");
             d3.select(circles[d.key]).transition().style("fill-opacity",0.3);
         }
-        
-        
+
+
 			function exibirGrafico(d) {
 			if (typeof d.target != "undefined") {
                 d = d.target;
             }
-            
+
             if (d.children || d._children){
 				if (detalhes){
 					geraGraficoLinhas(d);
 					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "1");
-					
+
 					toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
 				}
 				else{
-				
+
 				toolTip.transition()
                 .duration(200)
                 .style("opacity", "1");
-				
+
 				header.text(d["source_Level1"]);
 				header1.text((d.depth > 1) ? d["source_Level2"] : "");
 				header2.html((d.depth > 2) ? d["source_Level3"] : "");
 				if (d.depth > 3) header2.html(header2.html() + " - " + d["source_Level4"]);
-            
+
 				fedSpend.text(formatCurrency(d[campo[0]]));
 
 				stateSpend.text(formatCurrency(d[campo[1]]));
 
 				localSpend.text(formatCurrency(d[campo[2]]));
-				
+
 				 toolTip.style("left", (d3.event.pageX - 220) + "px")
                 .style("top", (d3.event.pageY - 60) + "px");
 				}
@@ -281,7 +287,7 @@ function esconderGrafico(d) {
 					toolTipGrafTempo.transition()
 					.duration(200)
 					.style("opacity", "1");
-					
+
 					toolTipGrafTempo.style("left", (d3.event.pageX - 700) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
 				}
@@ -290,15 +296,15 @@ function esconderGrafico(d) {
 				toolTipAluno.transition()
 				.duration(200)
 				.style("opacity", "1");
-				
+
 				desenharGrafBarras(d);
-				
+
 				toolTipAluno.style("left", (d3.event.pageX - 220) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
 				}
 
 			}
- 
+
             d3.select(labels[d.key]).transition().style("font-weight","bold").style("font-size","16");
         }
 
