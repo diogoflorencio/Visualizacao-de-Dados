@@ -192,13 +192,13 @@ function converteData(data){
 						.attr("name","balao")
 						.attr("class","balao2")
 						.style("left", (node.y+68)+"px")
-						.style("top", (node.x-949-62*qntBaloes)+"px")
+						.style("top", (node.x-949-65*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
 				d3.select(document.getElementById("body")).append("h1")
 						.attr("name","balao")
 						.attr("class","qtdDesistentes")
 						.style("left", (node.y+54)+"px")
-						.style("top", (node.x-1146-62*qntBaloes)+"px")
+						.style("top", (node.x-1146-65*qntBaloes)+"px")
 						.text(node[campo[3]]);
 			}
 		}
