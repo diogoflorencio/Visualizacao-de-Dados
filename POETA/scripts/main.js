@@ -58,6 +58,9 @@
     var margin;
     var width;
     var height;
+    
+    //Último nó clicado. Variável usada para diminuir o tamanho do nó.
+    var lastNodeId;
 
 
 //Cores para o grafico. Nota >= 7, Nota < 7, Desistentes.
@@ -389,11 +392,13 @@ function update(source) {
 						exibirGrafico(d);
                         d3.select(document.getElementById("node_" + d.id_num)).select("circle")
                                 .attr("r", raio+20);
+                        lastNodeId = d.id_num;
 					}
 					else{
 						esconderGrafico(d);
-                        d3.select(document.getElementById("node_" + d.id_num)).select("circle")
+                        d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
                                 .attr("r", raio+10);
+                                
 					}
 					clickada = !clickada;
 				}
