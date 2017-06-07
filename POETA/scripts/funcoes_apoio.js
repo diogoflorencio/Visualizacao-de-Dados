@@ -248,7 +248,7 @@ function esconderGrafico(d) {
         }
 
 
-			function exibirGrafico(d) {
+function exibirGrafico(d) {
 			if (typeof d.target != "undefined") {
                 d = d.target;
             }
@@ -260,7 +260,7 @@ function esconderGrafico(d) {
 					.duration(200)
 					.style("opacity", "1");
 
-					toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
+				toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
 				}
 				else{
@@ -319,6 +319,30 @@ function setTextModoPesquisa(){
 		div_mode_pesq.innerText = "Modo de visualização Geral";
 }
 
-function exibirEntregas(){
-	console.log("Exibir entregas");
+function exibirEntregas(d){
+	var divEntregas = d3.select(document.getElementById("divEntregas"));
+	divEntregas.style("visibility","visible")
+				.style("left", (d3.event.pageX - 400) + "px")
+                .style("top", (d3.event.pageY + 30) + "px");
+				
+	var tabela = divEntregas.append("table").attr("class","tg");
+	var linha = tabela.append("tr");
+		
+		linha.append("th")
+			.attr("class","tg-yw4l")
+			.text("Aluno");
+		
+		linha.append("th")
+			.attr("class","tg-yw4l")
+			.text("Status");
+			
+		linha.append("th")
+			.attr("class","tg-yw4l")
+			.text("Data de início");
+			
+		linha.append("th")
+			.attr("class","tg-yw4l")
+			.text("Data de entrega");
+			
+		esconderGrafico(d);
 }

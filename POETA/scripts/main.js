@@ -159,6 +159,11 @@ function main() {
     levelCeil=[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}];   //Acrescentei Mais Nós (Níveis de Célula) 25/03/2016
 
     var nodeRadius;
+    
+    d3.select(document.getElementById("btnEntregas"))
+			.on("click", function(d){
+				exibirEntregas(d);
+			});
 
     d3.csv("data/DataBase.csv", function (csv) {
 
