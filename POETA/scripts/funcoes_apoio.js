@@ -211,7 +211,10 @@ function converteData(data){
 		d3.selectAll(document.getElementsByName("balao")).remove();
 	}
 
-
+ var formatCurrency = function (d) {
+        return d
+    };
+    
 function esconderGrafico(d) {
 
 					toolTipGrafLinhas.transition()
@@ -314,4 +317,8 @@ function setTextModoPesquisa(){
 		div_mode_pesq.innerText = "Modo de visualização Individual";
 	else
 		div_mode_pesq.innerText = "Modo de visualização Geral";
+}
+
+function exibirEntregas(){
+	console.log("Exibir entregas");
 }

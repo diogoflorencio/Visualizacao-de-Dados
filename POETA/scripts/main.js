@@ -34,10 +34,6 @@
  var svg;
  var levelCeil;
  var diagonal;
- 
- var formatCurrency = function (d) {
-        return d
-    };
     
     var header;	 //Texto que aparece no topo do toolTip
     var header1; //Texto logo abaixo do header do toolTip

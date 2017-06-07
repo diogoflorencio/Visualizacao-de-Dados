@@ -36,6 +36,7 @@
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="styles/menu_lateral1.css">
     <link rel="stylesheet" href="styles/balao.css">
+    <link rel="stylesheet" href="styles/tabela.css">
     <link rel="icon" href="images/favicon.png">
 
 	<script type="text/javascript" src="scripts/loader.js"></script>
@@ -52,7 +53,8 @@
 <body onload="main()">
 <div id="body" style="position: absolute; top:100px;">
     <div id="toolTip" class="tooltip" style="opacity:0;">
-      <a href="prazos" style="position:relative; left:330px"><i class="fa fa-calendar" aria-hidden="true"></i> Prazos</a>
+		
+      <button class="btn btn-primary" onclick="filtrar()"><i class="fa fa-calendar" aria-hidden="true"></i> Prazos</button>
         <div id="head" class="header"></div>
         <div id="header1" class="header1"></div>
         <div id="header2" class="header2"></div>
