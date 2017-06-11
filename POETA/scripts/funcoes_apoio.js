@@ -348,5 +348,14 @@ function exibirEntregas(d){
 		linha.append("th")
 			.attr("class","tg-yw4l")
 			.text("Data de entrega");
+
+		linha.append("button")
+			.text("X")
+			.on("click", function(d){
+				  d3.select(document.getElementById("divEntregas")).remove();
+					d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
+									.attr("r", raio+10);
+					clickada = ! clickada;
+			});;
 		esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)))	;
 }
