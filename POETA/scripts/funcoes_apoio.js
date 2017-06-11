@@ -214,7 +214,7 @@ function converteData(data){
  var formatCurrency = function (d) {
         return d
     };
-    
+
 function esconderGrafico(d) {
 
 					toolTipGrafLinhas.transition()
@@ -320,29 +320,33 @@ function setTextModoPesquisa(){
 }
 
 function exibirEntregas(d){
+	var teste = document.createElement("div");
+	teste.id = "divEntregas";
+	document.body.appendChild(teste);
+
 	var divEntregas = d3.select(document.getElementById("divEntregas"));
 	divEntregas.style("visibility","visible")
-				.style("left", (d3.event.pageX - 400) + "px")
-                .style("top", (d3.event.pageY + 30) + "px");
-				
+				.style("left", (d3.event.pageX - 300) + "px")
+                .style("top", (d3.event.pageY -20) + "px")
+								.style("position","absolute");
+
 	var tabela = divEntregas.append("table").attr("class","tg");
 	var linha = tabela.append("tr");
-		
+
 		linha.append("th")
 			.attr("class","tg-yw4l")
 			.text("Aluno");
-		
+
 		linha.append("th")
 			.attr("class","tg-yw4l")
 			.text("Status");
-			
+
 		linha.append("th")
 			.attr("class","tg-yw4l")
 			.text("Data de início");
-			
+
 		linha.append("th")
 			.attr("class","tg-yw4l")
 			.text("Data de entrega");
-			
-		esconderGrafico(d);
+		esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)))	;
 }

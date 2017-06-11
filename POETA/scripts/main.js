@@ -27,18 +27,18 @@
  var toolTipGrafTempo; //Div html que contem o grafico de tempo dos nós alunos
  var toolTip; //Div html que contem as informações das notas nos nós atividades
  var nodeAux;
- var escalaNota; 
+ var escalaNota;
  var dominioNota;
  var clickada = true;
- 
+
  var svg;
  var levelCeil;
  var diagonal;
-    
+
     var header;	 //Texto que aparece no topo do toolTip
     var header1; //Texto logo abaixo do header do toolTip
     var header2; //Texto abaixo do anterior
- 
+
  var fedSpend; //Subquadro "Federal Funds" dentro do toolTip
 
     var stateSpend; //Subquadro "State Funds" dentro do toolTip
@@ -50,18 +50,18 @@
     var federalButton;
     var stateButton;
     var localButton;
- 
+
     var margin;
     var width;
     var height;
-    
+
     //Último nó clicado. Variável usada para diminuir o tamanho do nó.
     var lastNodeId;
 
 
 //Cores para o grafico. Nota >= 7, Nota < 7, Desistentes.
 	var coresGrafico = ["#00ff00","#ff0000","#c7dbe5"];
-	
+
 	var cor_level1 = "#1C86EE";
     var cor_level1_emCurso = "#FF1493";
 
@@ -96,7 +96,7 @@ var m = [20, 120, 20, 120],
     var sumFields = ["Federal", "GovXFer", "State", "Local"];
     var sourceFields = ["Category", "Level1", "Level2", "Level3", "Level4", "Level5", "Level6", "Level7", "Level8", "Level9", "Level10", "Level11", "Level12", "Level13", "Level14", "Level15", "Level16", "Level17", "Level18"];
 	var campo = ["Nota >= 7","Nota < 7","Desistentes","Desistentes aqui","Atividade sem nota","Em curso"];
-	
+
 	//Atributo que será usado para calcular a cor dos nós
 	var campoAnalize = "sum_Federal";
 	//Possíveis cores dos nós. Vermelho, amarelo e verde, respectivamente.
@@ -106,12 +106,12 @@ var m = [20, 120, 20, 120],
 	//valores do dominio para escala de cores. Menor valor fica a primeira cor do array cores e o maior a segunda.
 	var dominio = [0,0.5,1];
 	var dominioNotas = [1,5,10];
-	
+
 	var escala = d3.scale.linear().range(cores);
-    
+
 function main() {
 	escala.domain(dominio); //Parâmetro usado para definir a mudança de cores (Verde, Vermelho, amarelo)
-	
+
 	escalaNota = d3.scale.linear().range(cores);
 	escalaNota.domain(dominioNotas);
 
@@ -127,13 +127,13 @@ function main() {
     header = d3.select(document.getElementById("head"));	 //Texto que aparece no topo do toolTip
     header1 = d3.select(document.getElementById("header1")); //Texto logo abaixo do header do toolTip
     header2 = d3.select(document.getElementById("header2")); //Texto abaixo do anterior
-    
+
     toolTipAluno = d3.select(document.getElementById("toolTipAluno"));
     toolTipGrafLinhas = d3.select(document.getElementById("toolTipGrafLinha"));
     toolTipGrafTempo = d3.select(document.getElementById("toolTipGrafTempo"));
-    
+
      criarGrafBarras();
- 
+
     fedSpend = d3.select(document.getElementById("fedSpend")); //Subquadro "Federal Funds" dentro do toolTip
     stateSpend = d3.select(document.getElementById("stateSpend")); //Subquadro "State Funds" dentro do toolTip
 
@@ -159,7 +159,7 @@ function main() {
     levelCeil=[{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}];   //Acrescentei Mais Nós (Níveis de Célula) 25/03/2016
 
     var nodeRadius;
-    
+
     d3.select(document.getElementById("btnEntregas"))
 			.on("click", function(d){
 				exibirEntregas(d);
@@ -183,10 +183,10 @@ function main() {
         function loadingData(i){
             nest = nest.key(function (d) {
                 return d["Level"+i];
-            });   
+            });
             if(i< maxLevel) loadingData(i+1);
         }
-        
+
         nest =  nest.entries(data);
         root = {};
         root.values = nest;
@@ -203,8 +203,8 @@ function main() {
         tree.children(function (d) {
             return d.children;
         });
-        
-		
+
+
         initialize();
 
         // Initialize the display to show a few nodes.
@@ -272,7 +272,7 @@ function sumNodesCopia(root) {
                     if(!isNaN(folhas[i]["Nota"+(depth-1)])){
 						pai[campo[3]]++;
 					}
-				}   
+				}
                 else if(folhas[i]["Nota"+depth] < 0){
                     pai[campo[4]]++;
                 }
@@ -283,7 +283,7 @@ function sumNodesCopia(root) {
 					pai[campo[0]]++;
 				}
 				pai = pai.parent;
-			} 
+			}
 		}
 }
 
@@ -305,7 +305,7 @@ function toggleButtons(index) {
 function apagaGrafBarras(){
 		grafBarra.selectAll(".bar").remove();
 		grafBarra.selectAll("g").remove();
-}	
+}
 
 function converteDados(node){
 		var data = [];
@@ -353,7 +353,7 @@ function update(source) {
                     d.linkColor = escala(d[campo[0]]/(d[campo[0]] + d[campo[1]] + d[campo[2]]));
                 }
 			}
-			
+
 			else{
 				var media = 0;
 				var i;
@@ -364,9 +364,9 @@ function update(source) {
 					}
 					media += d["Nota"+i];
 				}
-				
+
 				media = media/i;
-				
+
 				if(d.linkColor !== coresGrafico[2]) d.linkColor = escalaNota(media);
 			}
 		});
@@ -397,9 +397,10 @@ function update(source) {
 					}
 					else{
 						esconderGrafico(d);
+                        d3.select(document.getElementById("divEntregas")).remove();
                         d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
                                 .attr("r", raio+10);
-                                
+
 					}
 					clickada = !clickada;
 				}
@@ -423,7 +424,7 @@ function update(source) {
                 return d.children || d._children ? "end" : "start";
             })
             .text(function (d) {
-                var ret = (!(d.children || d._children)) ? d.Level18 : d.key; 
+                var ret = (!(d.children || d._children)) ? d.Level18 : d.key;
                 ret = (String(ret).length > 25) ? String(ret).substr(0, 22) + "..." : ret;
                 return ret;
             })
@@ -467,7 +468,7 @@ function update(source) {
             .data(tree.links(nodes), function (d) {
                 return d.target.id;
             });
-		
+
         var rootCounter = 0;
 
         // Enter any new links at the parent's previous position.
@@ -492,22 +493,22 @@ function update(source) {
 				.attr("y1", "0%")
 				.attr("x2", "100%")
 				.attr("y2", "0%")
-				
+
 				gradient.append("stop")
 			    .attr("offset", "0%")
 			    .attr("stop-color", d.source.linkColor)
 			    .attr("stop-opacity", 1);
-				
+
 				gradient.append("stop")
 			    .attr("offset", "100%")
 			    .attr("stop-color", d.target.linkColor)
 			    .attr("stop-opacity", 1);
-                
+
 			   	return "url(#gradient_"+d.target.id+")"
             })
             .style("stroke-width", 2*raio)
             .style("stroke-linecap", "round")
-		
+
         link.transition()
             .duration(duration)
             .attr("d", diagonal)
@@ -522,7 +523,7 @@ function update(source) {
             .duration(duration)
             .attr("d", diagonal)
             .remove();
-            
+
             link[0].forEach(function (d){
 			d3.select(d).style("stroke", function (d, i) {
 				d3.select(document.getElementById("gradient_"+d.target.id)).remove();
@@ -533,35 +534,35 @@ function update(source) {
 				.attr("y1", "0%")
 				.attr("x2", "100%")
 				.attr("y2", "0%")
-				
+
 				gradient.append("stop")
 			    .attr("offset", "0%")
 			    .attr("stop-color", d.source.linkColor)
 			    .attr("stop-opacity", 1);
-				
+
 				gradient.append("stop")
 			    .attr("offset", "100%")
 			    .attr("stop-color", d.target.linkColor)
 			    .attr("stop-opacity", 1);
-                
+
 			   	return "url(#gradient_"+d.target.id+")"
             })
             .style("stroke-width", 2*raio)
             .style("stroke-linecap", "round")
 		});
-            
-            
-        
+
+
+
 
         // Stash the old positions for transition.
         nodes.forEach(function (d) {
             d.x0 = d.x;
             d.y0 = d.y;
         });
-		
+
 		removerBalao();
         colocarBalao(root);
-        
+
         function type(d) {
 			d.frequency = +d.frequency;
 			return d;
@@ -577,4 +578,4 @@ function toggleAll(d) {
                 d.values.forEach(toggleAll);
                 toggleNodes(d);
             }
-        }		
+        }
