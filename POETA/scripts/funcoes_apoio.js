@@ -329,8 +329,16 @@ function exibirEntregas(d){
 
 	var divEntregas = d3.select(document.getElementById("divEntregas"));
 	divEntregas.style("left", (d3.event.pageX - 300) + "px")
-                .style("top", (d3.event.pageY -20) + "px")
-								.style("position","absolute");
+                .style("top", (d3.event.pageY -55) + "px")
+								.style("position","absolute")
+								.style("width","500px")
+								.style("height","500px");
+								// .style("background","#000000");
+
+	divEntregas.append("h1").text("jjjoijoj")
+								.style("height","20px")
+								.style("position","relative")
+								.style("left","-200px");
 
 	var tabela = divEntregas.append("table").attr("class","tg");
 	var linha = tabela.append("tr");
@@ -359,9 +367,36 @@ function exibirEntregas(d){
 									.attr("r", raio+10);
 					clickada = ! clickada;
 			});
-		esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
-		var filhos [];
-		getLeafs(d, filhos);
+
+			esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
+			var filhos = [];
+			getLeafs(lastNode, filhos);
+
+			for(var i = 0; i < filhos.length; i++){
+				linha = tabela.append("tr");
+				linha.append("td")
+				.attr("class","tg-yw4l")
+				.text("Data de início");
+
+				linha.append("td")
+				.attr("class","tg-verde")
+				.text("Data de início");
+
+				linha.append("td")
+				.attr("class","tg-vermelho")
+				.text("Data de início");
+
+				linha.append("td")
+				.attr("class","tg-vermelho")
+				.text("Data de início");
+			}
+
+
+
+
+
+
+		console.log(filhos.length);
 
 
 }
