@@ -328,8 +328,7 @@ function exibirEntregas(d){
 	document.body.appendChild(teste);
 
 	var divEntregas = d3.select(document.getElementById("divEntregas"));
-	divEntregas.style("visibility","visible")
-				.style("left", (d3.event.pageX - 300) + "px")
+	divEntregas.style("left", (d3.event.pageX - 300) + "px")
                 .style("top", (d3.event.pageY -20) + "px")
 								.style("position","absolute");
 
@@ -359,6 +358,10 @@ function exibirEntregas(d){
 					d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
 									.attr("r", raio+10);
 					clickada = ! clickada;
-			});;
-		esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)))	;
+			});
+		esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
+		var filhos [];
+		getLeafs(d, filhos);
+
+
 }

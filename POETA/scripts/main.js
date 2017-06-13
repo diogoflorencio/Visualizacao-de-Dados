@@ -57,6 +57,7 @@
 
     //Último nó clicado. Variável usada para diminuir o tamanho do nó.
     var lastNodeId;
+    var lastNode;
 
 
 //Cores para o grafico. Nota >= 7, Nota < 7, Desistentes.
@@ -394,6 +395,7 @@ function update(source) {
                         d3.select(document.getElementById("node_" + d.id_num)).select("circle")
                                 .attr("r", raio+20);
                         lastNodeId = d.id_num;
+                        lastNode = d;
 					}
 					else{
 						esconderGrafico(d);
@@ -404,7 +406,7 @@ function update(source) {
 					}
 					clickada = !clickada;
 				}
-            });
+        });
 
         nodeEnter.append("svg:circle")
             .attr("r", 1e-6)
