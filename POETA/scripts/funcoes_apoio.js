@@ -322,7 +322,7 @@ function setTextModoPesquisa(){
 		div_mode_pesq.innerText = "Modo de visualização Geral";
 }
 
-function exibirEntregas(d){
+function exibirEntregas(){
 	var teste = document.createElement("div");
 	teste.id = "divEntregas";
 	document.body.appendChild(teste);
@@ -333,12 +333,15 @@ function exibirEntregas(d){
 								.style("position","absolute")
 								.style("width","500px")
 								.style("height","500px");
-								// .style("background","#000000");
+								//.style("background","#ffffff");
 
-	divEntregas.append("h1").text("jjjoijoj")
-								.style("height","20px")
-								.style("position","relative")
-								.style("left","-200px");
+	var tableTitle = divEntregas.append("h4").text("HUEHUEHUE BRBR")
+								.style("height","10px")
+								.style("position","relative");
+								
+	var tablePrazo = divEntregas.append("h4").text("HUEHUEHUE BRBR")
+								.style("height","10px")
+								.style("position","relative");
 
 	var tabela = divEntregas.append("table").attr("class","tg");
 	var linha = tabela.append("tr");
@@ -369,34 +372,55 @@ function exibirEntregas(d){
 			});
 
 			esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
+			
+			var inicioAtv, fimAtv;
 			var filhos = [];
 			getLeafs(lastNode, filhos);
 
 			for(var i = 0; i < filhos.length; i++){
+				if(filhos[i]["Data Fim "+lastNode.depth]){
+					tableTitle.text(lastNode.key);
+					tablePrazo.text( 
+								" inicio: " + filhos[i]["Data Inicio "+lastNode.depth] + 
+								" fim: " + filhos[i]["Data Fim "+lastNode.depth]);
+								
+					inicioAtv = filhos[i]["Data Inicio "+lastNode.depth];
+					fimAtv = filhos[i]["Data Fim "+lastNode.depth];
+					break;
+				}
+			}
+			
+			for(var i = 0; i < filhos.length; i++){
+				var filhoAtual = filhos[i];
+				
 				linha = tabela.append("tr");
 				linha.append("td")
 				.attr("class","tg-yw4l")
-				.text("Data de início");
+				.text(filhoAtual["Level18"]);
+				
+				var status;
+				if(!filhoAtual["Data Fim "+lastNode.depth]){
+					status = "tg-yw4l";
+				}
+				
+				else if(converteData(filhoAtual["Data Fim "+lastNode.depth]) <= 
+						converteData(fimAtv)){
+					status = "tg-verde";
+				}
+				
+				else {
+					status = "tg-vermelho";
+				}
+				
+				linha.append("td")
+				.attr("class", status);
 
 				linha.append("td")
-				.attr("class","tg-verde")
-				.text("Data de início");
+				.attr("class","tg-yw4l")
+				.text(filhoAtual["Data Inicio "+lastNode.depth]);
 
 				linha.append("td")
-				.attr("class","tg-vermelho")
-				.text("Data de início");
-
-				linha.append("td")
-				.attr("class","tg-vermelho")
-				.text("Data de início");
+				.attr("class","tg-yw4l")
+				.text(filhoAtual["Data Fim "+lastNode.depth]);
 			}
-
-
-
-
-
-
-		console.log(filhos.length);
-
-
 }
