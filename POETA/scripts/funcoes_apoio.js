@@ -226,7 +226,10 @@ function esconderGrafico(d) {
 
 					 toolTip.transition()
 					.duration(200)
-					.style("opacity", "0");
+					.style("opacity", "0")
+					.transition()
+					.duration(0)
+					.style("top","-1000px");
 
 					toolTipGrafTempo.transition()
 					.duration(200)
