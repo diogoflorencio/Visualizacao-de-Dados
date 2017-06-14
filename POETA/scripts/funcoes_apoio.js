@@ -429,20 +429,18 @@ function esconderFolhas(d){
 	var folhas = [];
 	var parentsId = [];
 	getLeafs(d,folhas);
-	console.log(folhas[0]);
 	for(var i = 0; i < folhas.length; i++){
 		if(contains(folhas[i].parent.id_num, parentsId)){
 			d3.select(document.getElementById("node_"+folhas[i].id_num)).remove();
-			d3.select(document.getElementById("link_" + folhas[i].target.key)).remove();
-		}else {
+			// d3.select(document.getElementById("link_" + folhas[i].target.key)).remove();
+		}else 
 			parentsId.push(folhas[i].parent.id_num);
-			// console.log(folhas[i].parent.id_num);
-		}
 	}
 }
 
 function contains(element,list){
 	for(var i = 0; i < list.length; i++)
-		if(list[i] == element) return true;
+		if(list[i] == element)
+			return true;
 	return false;
 }
