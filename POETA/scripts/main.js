@@ -381,13 +381,16 @@ function update(source) {
             .attr("id",function (d) { return "node_" + d.id_num })
             .attr("name",function (d) { return d.id_num })
             .attr("transform", function (d) {
+              //console.log("aqui");
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
             .on("click", function (d) {
 				if(d.depth === 0) return
-                if(d.depth === 1){
-					toggleAll(d);
-                    update(d);
+        if(d.depth === 1){
+				      toggleAll(d);
+              update(d);
+              esconderFolhas(d);
+            //  console.log("aqui");
 				}
                 else{
 					if(clickada){

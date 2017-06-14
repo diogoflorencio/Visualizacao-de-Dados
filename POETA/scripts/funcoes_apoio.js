@@ -338,7 +338,7 @@ function exibirEntregas(){
 	var tableTitle = divEntregas.append("h4").text("HUEHUEHUE BRBR")
 								.style("height","10px")
 								.style("position","relative");
-								
+
 	var tablePrazo = divEntregas.append("h4").text("HUEHUEHUE BRBR")
 								.style("height","10px")
 								.style("position","relative");
@@ -372,7 +372,7 @@ function exibirEntregas(){
 			});
 
 			esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
-			
+
 			var inicioAtv, fimAtv;
 			var filhos = [];
 			getLeafs(lastNode, filhos);
@@ -380,38 +380,38 @@ function exibirEntregas(){
 			for(var i = 0; i < filhos.length; i++){
 				if(filhos[i]["Data Fim "+lastNode.depth]){
 					tableTitle.text(lastNode.key);
-					tablePrazo.text( 
-								" inicio: " + filhos[i]["Data Inicio "+lastNode.depth] + 
+					tablePrazo.text(
+								" inicio: " + filhos[i]["Data Inicio "+lastNode.depth] +
 								" fim: " + filhos[i]["Data Fim "+lastNode.depth]);
-								
+
 					inicioAtv = filhos[i]["Data Inicio "+lastNode.depth];
 					fimAtv = filhos[i]["Data Fim "+lastNode.depth];
 					break;
 				}
 			}
-			
+
 			for(var i = 0; i < filhos.length; i++){
 				var filhoAtual = filhos[i];
-				
+
 				linha = tabela.append("tr");
 				linha.append("td")
 				.attr("class","tg-yw4l")
 				.text(filhoAtual["Level18"]);
-				
+
 				var status;
 				if(!filhoAtual["Data Fim "+lastNode.depth]){
 					status = "tg-yw4l";
 				}
-				
-				else if(converteData(filhoAtual["Data Fim "+lastNode.depth]) <= 
+
+				else if(converteData(filhoAtual["Data Fim "+lastNode.depth]) <=
 						converteData(fimAtv)){
 					status = "tg-verde";
 				}
-				
+
 				else {
 					status = "tg-vermelho";
 				}
-				
+
 				linha.append("td")
 				.attr("class", status);
 
@@ -423,4 +423,26 @@ function exibirEntregas(){
 				.attr("class","tg-yw4l")
 				.text(filhoAtual["Data Fim "+lastNode.depth]);
 			}
+}
+
+function esconderFolhas(d){
+	var folhas = [];
+	var parentsId = [];
+	getLeafs(d,folhas);
+	console.log(folhas[0]);
+	for(var i = 0; i < folhas.length; i++){
+		if(contains(folhas[i].parent.id_num, parentsId)){
+			d3.select(document.getElementById("node_"+folhas[i].id_num)).remove();
+			d3.select(document.getElementById("link_" + folhas[i].target.key)).remove();
+		}else {
+			parentsId.push(folhas[i].parent.id_num);
+			// console.log(folhas[i].parent.id_num);
+		}
+	}
+}
+
+function contains(element,list){
+	for(var i = 0; i < list.length; i++)
+		if(list[i] == element) return true;
+	return false;
 }
