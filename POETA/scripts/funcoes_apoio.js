@@ -357,8 +357,8 @@ function exibirEntregas(){
                 .style("top", (d3.event.pageY -55) + "px")
 								.style("position","absolute")
 								.style("width","500px")
-								.style("height","500px");
-								//.style("background","#ffffff");
+								.style("height","500px")
+								.style("background","#ffffff");
 
 	var tableTitle = divEntregas.append("h4").text("HUEHUEHUE BRBR")
 								.style("height","10px")
