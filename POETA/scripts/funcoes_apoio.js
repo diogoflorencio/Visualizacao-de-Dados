@@ -216,7 +216,12 @@ function converteData(data){
     };
 
 function esconderGrafico(d) {
-
+	
+					var timeline = document.getElementById('timelineGraf');
+					if(timeline){
+						timeline.parentNode.removeChild(timeline);
+					}
+					
 					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "0")
@@ -258,13 +263,33 @@ function exibirGrafico(d) {
 
             if (d.children || d._children){
 				if (detalhes){
-					geraGraficoLinhas(d);
-					toolTipGrafLinhas.transition()
+					
+					var timeline = document.createElement("div");
+					timeline.id = "timelineGraf";
+					document.body.appendChild(timeline);
+					timeline = d3.select(document.getElementById('timelineGraf'));
+					
+					timeline.style("position","absolute")
+								.style("width","800px")
+								.style("height","200px")
+								.style("background", "#FFFFFF");
+					
+					exibirTimeline(d);
+					
+					timeline.transition()
 					.duration(200)
 					.style("opacity", "1");
-
-				toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
+					
+					timeline.style("left", (d3.event.pageX - 400) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
+					
+					//geraGraficoLinhas(d);
+					//toolTipGrafLinhas.transition()
+					//.duration(200)
+					//.style("opacity", "1");
+
+				//toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
+                //.style("top", (d3.event.pageY + 30) + "px");
 				}
 				else{
 
