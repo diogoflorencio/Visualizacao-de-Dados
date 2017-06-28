@@ -194,12 +194,12 @@ function converteData(data){
 						.style("left", (node.y+68)+"px")
 						.style("top", (node.x-949-65*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
-				d3.select(document.getElementById("body")).append("h1")
-						.attr("name","balao")
-						.attr("class","qtdDesistentes")
-						.style("left", (node.y+54)+"px")
-						.style("top", (node.x-1146-65*qntBaloes)+"px")
-						.text(node[campo[3]]);
+				// d3.select(document.getElementById("body")).append("h1")
+				// 		.attr("name","balao")
+				// 		.attr("class","qtdDesistentes")
+				// 		.style("left", (node.y+54)+"px")
+				// 		.style("top", (node.x-1146-65*qntBaloes)+"px")
+				// 		.text(node[campo[3]]);
 			}
 		}
 		for(var i = 0; i < node.children.length; i++){
