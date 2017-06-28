@@ -8,7 +8,7 @@ var inicioAtv;
 var fimAtv;
 var filhos = [];
 getLeafs(d,filhos);
-d3.select(element).style("height", filhos.length*40 + "px");
+d3.select(element).style("height", (filhos.length*35 + 70) + "px");
 var atividades = getActivitiesName(d);
 var prazos = getActivitiesPrazos(d,filhos);
 
