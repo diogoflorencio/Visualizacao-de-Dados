@@ -194,12 +194,12 @@ function converteData(data){
 						.style("left", (node.y+68)+"px")
 						.style("top", (node.x-949-65*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
-				// d3.select(document.getElementById("body")).append("h1")
-				// 		.attr("name","balao")
-				// 		.attr("class","qtdDesistentes")
-				// 		.style("left", (node.y+54)+"px")
-				// 		.style("top", (node.x-1146-65*qntBaloes)+"px")
-				// 		.text(node[campo[3]]);
+				d3.select(document.getElementById("body")).append("h1")
+						.attr("name","balao")
+						.attr("class","qtdDesistentes")
+						.style("left", (node.y+54)+"px")
+						.style("top", (node.x-1146-65*qntBaloes)+"px")
+						.text(node[campo[3]]);
 			}
 		}
 		for(var i = 0; i < node.children.length; i++){
@@ -266,35 +266,15 @@ function exibirGrafico(d) {
                 d = d.target;
             }
 
-      if (d.children || d._children){
-				if (detalhes){
-
-					var timeline = document.createElement("div");
-					timeline.id = "timelineGraf";
-					document.body.appendChild(timeline);
-					timeline = d3.select(document.getElementById('timelineGraf'));
-
-					timeline.style("position","absolute")
-								.style("width","800px")
-								.style("height","200px")
-								.style("background", "#FFFFFF");
-
-					exibirTimeline(d);
-
-					timeline.transition()
+            if (d.children || d._children){
+				if (detalhes){					
+					geraGraficoLinhas(d);
+					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "1");
 
-					timeline.style("left", (d3.event.page - 400) + "px")
+				toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
-
-					//geraGraficoLinhas(d);
-					//toolTipGrafLinhas.transition()
-					//.duration(200)
-					//.style("opacity", "1");
-
-				//toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
-                //.style("top", (d3.event.pageY + 30) + "px");
 				}
 				else{
 
@@ -304,14 +284,12 @@ function exibirGrafico(d) {
 
 				header.text(d["source_Level1"]);
 				header1.text((d.depth > 1) ? "Atividade: " + d["source_Level4"] : "");
-				header2.html("");
-				document.getElementById("btnEntregas").innerText = "Prazos";
+
 				fedSpend.text(formatCurrency(d[campo[0]]));
 				stateSpend.text(formatCurrency(d[campo[1]]));
 				localSpend.text(formatCurrency(d[campo[2]]));
-				if(!entregas)
-					toolTip.style("left", (d3.event.pageX - 220) + "px")
-               	 .style("top", (d3.event.pageY - 60) + "px");
+				toolTip.style("left", (d3.event.pageX - 220) + "px")
+                .style("top", (d3.event.pageY - 60) + "px");
 				}
 			}
 			else {
@@ -349,6 +327,31 @@ function setTextModoPesquisa(){
 		div_mode_pesq.innerText = "Modo de visualização Geral";
 }
 
+function exibirPrazos(){
+	esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
+	
+	var timeline = document.createElement("div");
+	timeline.id = "timelineGraf";
+	document.body.appendChild(timeline);
+	timeline = d3.select(document.getElementById('timelineGraf'));
+	
+	timeline.style("position","absolute")
+				.style("width","800px")
+				.style("height","200px")
+				.style("background", "#FFFFFF");
+	
+	exibirTimeline(lastNode);
+	console.log(lastNode);
+	console.log(d3.event.pageX);
+	console.log(d3.event.pageY);
+	timeline.transition()
+		.duration(200)
+		.style("opacity", "1");
+					
+	timeline.style("left", (d3.event.pageX - 400) + "px")
+            .style("top", (d3.event.pageY + 30) + "px");
+}
+
 function exibirEntregas(){
 			//esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
 			document.getElementById("quadro_1").innerText = "No prazo";
@@ -375,9 +378,6 @@ function exibirEntregas(){
 			fedSpend.text(formatCurrency(em_dia));
 			stateSpend.text(formatCurrency(atrasados));
 			localSpend.text(formatCurrency(nao_entregaram));
-
-			document.getElementById("btnEntregas").innerText = "Notas";
-
 }
 
 function esconderFolhas(d){

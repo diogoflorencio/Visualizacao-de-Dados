@@ -107,7 +107,7 @@ var m = [20, 120, 20, 120],
 	//valores do dominio para escala de cores. Menor valor fica a primeira cor do array cores e o maior a segunda.
 	var dominio = [0,0.5,1];
 	var dominioNotas = [1,5,10];
-  var entregas = false;
+
 	var escala = d3.scale.linear().range(cores);
 
 function main() {
@@ -163,13 +163,9 @@ function main() {
 
     d3.select(document.getElementById("btnEntregas"))
 			.on("click", function(d){
-        if(!entregas)
-				    exibirEntregas();
-        else
-            exibirGrafico(lastNode);
-        entregas = !entregas;
+				exibirEntregas();
 			});
-
+			
 	d3.select(document.getElementById("btnPrazos"))
 			.on("click", function(d){
 				exibirPrazos();
@@ -402,27 +398,7 @@ function update(source) {
             //  console.log("aqui");
 				}
                 else{
-          if(d[campo[4]] > 0 && clickada ){
-            lastNode = d;
-            lastNodeId = d.id_num;
-            d3.select(document.getElementById("body")).append("h1")
-    						.attr("id","semNotaH1")
-    						.text("Atividade sem nota");
-                
-              d3.select(document.getElementById("semNotaH1"))
-                .style("left", (d3.event.page - 400) + "px")
-                .style("top", (d3.event.pageY + 30) + "px");
-
-            d3.select(document.getElementById("node_" + d.id_num)).select("circle")
-                    .attr("r", raio+20);
-          }
-          else if(d[campo[4]] > 0 && !clickada ){
-            d3.select(document.getElementById("semNotaH1")).remove();
-            d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
-                    .attr("r", raio+10);
-
-          }
-					else if(clickada){
+					if(clickada){
 						exibirGrafico(d);
                         d3.select(document.getElementById("node_" + d.id_num)).select("circle")
                                 .attr("r", raio+20);
