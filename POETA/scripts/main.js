@@ -394,7 +394,7 @@ function update(source) {
         if(d.depth === 1){
 				      toggleAll(d);
               update(d);
-              esconderFolhas(d);
+            //  esconderFolhas(d);
             //  console.log("aqui");
 				}
                 else{

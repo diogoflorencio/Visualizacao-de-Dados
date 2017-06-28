@@ -216,12 +216,12 @@ function converteData(data){
     };
 
 function esconderGrafico(d) {
-	
+
 					var timeline = document.getElementById('timelineGraf');
 					if(timeline){
 						timeline.parentNode.removeChild(timeline);
 					}
-					
+
 					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "0")
@@ -257,6 +257,11 @@ function esconderGrafico(d) {
 
 
 function exibirGrafico(d) {
+
+		document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
+		document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
+		document.getElementById("quadro_3").innerText = "Desistentes";
+
 			if (typeof d.target != "undefined") {
                 d = d.target;
             }
@@ -278,17 +283,12 @@ function exibirGrafico(d) {
                 .style("opacity", "1");
 
 				header.text(d["source_Level1"]);
-				header1.text((d.depth > 1) ? d["source_Level2"] : "");
-				header2.html((d.depth > 2) ? d["source_Level3"] : "");
-				if (d.depth > 3) header2.html(header2.html() + " - " + d["source_Level4"]);
+				header1.text((d.depth > 1) ? "Atividade: " + d["source_Level4"] : "");
 
 				fedSpend.text(formatCurrency(d[campo[0]]));
-
 				stateSpend.text(formatCurrency(d[campo[1]]));
-
 				localSpend.text(formatCurrency(d[campo[2]]));
-
-				 toolTip.style("left", (d3.event.pageX - 220) + "px")
+				toolTip.style("left", (d3.event.pageX - 220) + "px")
                 .style("top", (d3.event.pageY - 60) + "px");
 				}
 			}
@@ -353,106 +353,31 @@ function exibirPrazos(){
 }
 
 function exibirEntregas(){
-	var teste = document.createElement("div");
-	teste.id = "divEntregas";
-	document.body.appendChild(teste);
+			//esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
+			document.getElementById("quadro_1").innerText = "No prazo";
+			document.getElementById("quadro_2").innerText = "Atrasados";
+			document.getElementById("quadro_3").innerText = "Não entregue";
 
-	var divEntregas = d3.select(document.getElementById("divEntregas"));
-	divEntregas.style("left", (d3.event.pageX - 300) + "px")
-                .style("top", (d3.event.pageY -55) + "px")
-								.style("position","absolute")
-								.style("width","500px")
-								.style("height","500px")
-								.style("background","#ffffff");
-
-	var tableTitle = divEntregas.append("h4").text("HUEHUEHUE BRBR")
-								.style("height","10px")
-								.style("position","relative");
-
-	var tablePrazo = divEntregas.append("h4").text("HUEHUEHUE BRBR")
-								.style("height","10px")
-								.style("position","relative");
-
-	var tabela = divEntregas.append("table").attr("class","tg");
-	var linha = tabela.append("tr");
-
-		linha.append("th")
-			.attr("class","tg-yw4l")
-			.text("Aluno");
-
-		linha.append("th")
-			.attr("class","tg-yw4l")
-			.text("Status");
-
-		linha.append("th")
-			.attr("class","tg-yw4l")
-			.text("Data de início");
-
-		linha.append("th")
-			.attr("class","tg-yw4l")
-			.text("Data de entrega");
-
-		linha.append("button")
-			.text("X")
-			.on("click", function(d){
-				  d3.select(document.getElementById("divEntregas")).remove();
-					d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
-									.attr("r", raio+10);
-					clickada = ! clickada;
-			});
-
-			esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
-
-			var inicioAtv, fimAtv;
 			var filhos = [];
 			getLeafs(lastNode, filhos);
+			var inicioAtv = filhos[0]["Data Inicio "+lastNode.depth];
+			var fimAtv = filhos[0]["Data Fim "+lastNode.depth];
+			var em_dia = 0, atrasados = 0, nao_entregaram = 0;
 
-			for(var i = 0; i < filhos.length; i++){
-				if(filhos[i]["Data Fim "+lastNode.depth]){
-					tableTitle.text(lastNode.key);
-					tablePrazo.text(
-								" inicio: " + filhos[i]["Data Inicio "+lastNode.depth] +
-								" fim: " + filhos[i]["Data Fim "+lastNode.depth]);
-
-					inicioAtv = filhos[i]["Data Inicio "+lastNode.depth];
-					fimAtv = filhos[i]["Data Fim "+lastNode.depth];
-					break;
-				}
-			}
+			header1.text("Atividade: "+lastNode.key);
+			header2.html( " inicio: " + inicioAtv + " - " +
+			 							" fim: " + fimAtv);
 
 			for(var i = 0; i < filhos.length; i++){
 				var filhoAtual = filhos[i];
-
-				linha = tabela.append("tr");
-				linha.append("td")
-				.attr("class","tg-yw4l")
-				.text(filhoAtual["Level18"]);
-
-				var status;
-				if(!filhoAtual["Data Fim "+lastNode.depth]){
-					status = "tg-yw4l";
-				}
-
-				else if(converteData(filhoAtual["Data Fim "+lastNode.depth]) <=
-						converteData(fimAtv)){
-					status = "tg-verde";
-				}
-
-				else {
-					status = "tg-vermelho";
-				}
-
-				linha.append("td")
-				.attr("class", status);
-
-				linha.append("td")
-				.attr("class","tg-yw4l")
-				.text(filhoAtual["Data Inicio "+lastNode.depth]);
-
-				linha.append("td")
-				.attr("class","tg-yw4l")
-				.text(filhoAtual["Data Fim "+lastNode.depth]);
+				if(!filhoAtual["Data Fim "+lastNode.depth]) nao_entregaram++;
+				else if(converteData(filhoAtual["Data Fim "+lastNode.depth]) <= converteData(fimAtv)) em_dia++;
+				else  atrasados ++;
 			}
+
+			fedSpend.text(formatCurrency(em_dia));
+			stateSpend.text(formatCurrency(atrasados));
+			localSpend.text(formatCurrency(nao_entregaram));
 }
 
 function esconderFolhas(d){
@@ -463,7 +388,7 @@ function esconderFolhas(d){
 		if(contains(folhas[i].parent.id_num, parentsId)){
 			d3.select(document.getElementById("node_"+folhas[i].id_num)).remove();
 			// d3.select(document.getElementById("link_" + folhas[i].target.key)).remove();
-		}else 
+		}else
 			parentsId.push(folhas[i].parent.id_num);
 	}
 }
