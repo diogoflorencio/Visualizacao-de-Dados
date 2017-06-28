@@ -163,7 +163,12 @@ function main() {
 
     d3.select(document.getElementById("btnEntregas"))
 			.on("click", function(d){
-				exibirEntregas(d);
+				exibirEntregas();
+			});
+			
+	d3.select(document.getElementById("btnPrazos"))
+			.on("click", function(d){
+				exibirPrazos();
 			});
 
     d3.csv("data/DataBase.csv", function (csv) {

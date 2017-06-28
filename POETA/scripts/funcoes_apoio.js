@@ -262,34 +262,14 @@ function exibirGrafico(d) {
             }
 
             if (d.children || d._children){
-				if (detalhes){
-					
-					var timeline = document.createElement("div");
-					timeline.id = "timelineGraf";
-					document.body.appendChild(timeline);
-					timeline = d3.select(document.getElementById('timelineGraf'));
-					
-					timeline.style("position","absolute")
-								.style("width","800px")
-								.style("height","200px")
-								.style("background", "#FFFFFF");
-					
-					exibirTimeline(d);
-					
-					timeline.transition()
+				if (detalhes){					
+					geraGraficoLinhas(d);
+					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "1");
-					
-					timeline.style("left", (d3.event.pageX - 400) + "px")
-                .style("top", (d3.event.pageY + 30) + "px");
-					
-					//geraGraficoLinhas(d);
-					//toolTipGrafLinhas.transition()
-					//.duration(200)
-					//.style("opacity", "1");
 
-				//toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
-                //.style("top", (d3.event.pageY + 30) + "px");
+				toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
+                .style("top", (d3.event.pageY + 30) + "px");
 				}
 				else{
 
@@ -345,6 +325,31 @@ function setTextModoPesquisa(){
 		div_mode_pesq.innerText = "Modo de visualização Individual";
 	else
 		div_mode_pesq.innerText = "Modo de visualização Geral";
+}
+
+function exibirPrazos(){
+	esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
+	
+	var timeline = document.createElement("div");
+	timeline.id = "timelineGraf";
+	document.body.appendChild(timeline);
+	timeline = d3.select(document.getElementById('timelineGraf'));
+	
+	timeline.style("position","absolute")
+				.style("width","800px")
+				.style("height","200px")
+				.style("background", "#FFFFFF");
+	
+	exibirTimeline(lastNode);
+	console.log(lastNode);
+	console.log(d3.event.pageX);
+	console.log(d3.event.pageY);
+	timeline.transition()
+		.duration(200)
+		.style("opacity", "1");
+					
+	timeline.style("left", (d3.event.pageX - 400) + "px")
+            .style("top", (d3.event.pageY + 30) + "px");
 }
 
 function exibirEntregas(){
