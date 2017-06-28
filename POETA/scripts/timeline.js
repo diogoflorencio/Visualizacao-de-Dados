@@ -40,20 +40,20 @@ for(var i = 0; i < filhos.length; i++){
 			fimAtvAnterior = undefined;
 		}
 		else{
-			inicioAtvAtual = filhos[i]["Data Inicio "+j];
+			inicioAtvAtual = converteData(filhos[i]["Data Inicio "+j]);
 		}
 		
-		limiteAtvAtual = filhos[i]["Data Fim "+(j)]);
+		limiteAtvAtual = filhos[i]["Data Fim "+(j)];
 		fimAtvAtual = limiteAtvAtual;
-		inicioProxAtv = converteData(filhos[i]["Data Inicio "+(j+1)]));
+		inicioProxAtv = converteData(filhos[i]["Data Inicio "+(j+1)]);
 		
-		if(inicioProxAtv < converteData(fimAtvAtual)){
-			fimAtvAnterior = limiteAtvAtual;
-			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)]);
+		if(j < d.depth-1 && inicioProxAtv <= converteData(fimAtvAtual)){
+			fimAtvAnterior = makeDataWithTime(limiteAtvAtual);
+			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)];
 			
 			entregas.push({label: atividades[j-1],
 						type: TimelineChart.TYPE.INTERVAL,
-						from: converteData(inicioAtvAtual),
+						from: inicioAtvAtual,
 						to: converteData(limiteAtvAtual),
 						customClass: coresAtividades[(j-1)%coresAtividades.length]});
 						
@@ -66,7 +66,7 @@ for(var i = 0; i < filhos.length; i++){
 		else{
 			entregas.push({label: atividades[j-1],
 						type: TimelineChart.TYPE.INTERVAL,
-						from: converteData(inicioAtvAtual),
+						from: inicioAtvAtual,
 						to: makeDataWithTime(fimAtvAtual),
 						customClass: coresAtividades[(j-1)%coresAtividades.length]});
 		}

@@ -351,9 +351,6 @@ function exibirPrazos(){
 				.style("background", "#FFFFFF");
 	
 	exibirTimeline(lastNode);
-	console.log(lastNode);
-	console.log(d3.event.pageX);
-	console.log(d3.event.pageY);
 	timeline.transition()
 		.duration(200)
 		.style("opacity", "1");
