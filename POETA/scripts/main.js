@@ -107,7 +107,7 @@ var m = [20, 120, 20, 120],
 	//valores do dominio para escala de cores. Menor valor fica a primeira cor do array cores e o maior a segunda.
 	var dominio = [0,0.5,1];
 	var dominioNotas = [1,5,10];
-
+  var entregas = false;
 	var escala = d3.scale.linear().range(cores);
 
 function main() {
@@ -163,9 +163,13 @@ function main() {
 
     d3.select(document.getElementById("btnEntregas"))
 			.on("click", function(d){
-				exibirEntregas();
+        if(!entregas)
+				    exibirEntregas();
+        else
+            exibirGrafico(lastNode);
+        entregas = !entregas;
 			});
-			
+
 	d3.select(document.getElementById("btnPrazos"))
 			.on("click", function(d){
 				exibirPrazos();
