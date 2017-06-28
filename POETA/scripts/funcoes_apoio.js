@@ -285,7 +285,7 @@ function exibirGrafico(d) {
 					.duration(200)
 					.style("opacity", "1");
 
-					timeline.style("left", (d3.event.pageX - 400) + "px")
+					timeline.style("left", (d3.event.page - 400) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
 
 					//geraGraficoLinhas(d);
@@ -304,16 +304,11 @@ function exibirGrafico(d) {
 
 				header.text(d["source_Level1"]);
 				header1.text((d.depth > 1) ? "Atividade: " + d["source_Level4"] : "");
-				// header2.html((d.depth > 2) ? d["source_Level4"] : "");
-				// if (d.depth > 3) header2.html(header2.html() + " - " + d["source_Level4"]);
 
 				fedSpend.text(formatCurrency(d[campo[0]]));
-
 				stateSpend.text(formatCurrency(d[campo[1]]));
-
 				localSpend.text(formatCurrency(d[campo[2]]));
-
-				 toolTip.style("left", (d3.event.pageX - 220) + "px")
+				toolTip.style("left", (d3.event.pageX - 220) + "px")
                 .style("top", (d3.event.pageY - 60) + "px");
 				}
 			}
