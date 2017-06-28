@@ -402,7 +402,27 @@ function update(source) {
             //  console.log("aqui");
 				}
                 else{
-					if(clickada){
+          if(d[campo[4]] > 0 && clickada ){
+            lastNode = d;
+            lastNodeId = d.id_num;
+            d3.select(document.getElementById("body")).append("h1")
+    						.attr("id","semNotaH1")
+    						.text("Atividade sem nota");
+                
+              d3.select(document.getElementById("semNotaH1"))
+                .style("left", (d3.event.page - 400) + "px")
+                .style("top", (d3.event.pageY + 30) + "px");
+
+            d3.select(document.getElementById("node_" + d.id_num)).select("circle")
+                    .attr("r", raio+20);
+          }
+          else if(d[campo[4]] > 0 && !clickada ){
+            d3.select(document.getElementById("semNotaH1")).remove();
+            d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
+                    .attr("r", raio+10);
+
+          }
+					else if(clickada){
 						exibirGrafico(d);
                         d3.select(document.getElementById("node_" + d.id_num)).select("circle")
                                 .attr("r", raio+20);
