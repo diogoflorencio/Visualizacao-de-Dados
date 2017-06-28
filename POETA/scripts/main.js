@@ -107,7 +107,7 @@ var m = [20, 120, 20, 120],
 	//valores do dominio para escala de cores. Menor valor fica a primeira cor do array cores e o maior a segunda.
 	var dominio = [0,0.5,1];
 	var dominioNotas = [1,5,10];
-
+    var entregas = false;
 	var escala = d3.scale.linear().range(cores);
 
 function main() {
@@ -163,7 +163,11 @@ function main() {
 
     d3.select(document.getElementById("btnEntregas"))
 			.on("click", function(d){
-				exibirEntregas();
+				if(!entregas)
+                    exibirEntregas();
+                else
+                    exibirGrafico(lastNode);
+                entregas = !entregas;
 			});
 			
 	d3.select(document.getElementById("btnPrazos"))
@@ -398,7 +402,34 @@ function update(source) {
             //  console.log("aqui");
 				}
                 else{
-					if(clickada){
+
+					if(d[campo[4]] > 0 && clickada ){
+                        lastNode = d;
+                        lastNodeId = d.id_num;
+
+                        var attSemNota = document.createElement("div");
+                        attSemNota.id = "attSemNota";
+                        document.body.appendChild(attSemNota);
+
+                        document.getElementById("attSemNota").innerText = "Atividade sem nota";
+
+                        attSemNota = document.getElementById("attSemNota");
+                        attSemNota.style.position = "absolute";
+                        attSemNota.style.width = "280px"
+                        attSemNota.style.left = (d3.event.pageX - 135) + "px";
+                        attSemNota.style.top = (d3.event.pageY -70) + "px";
+                        attSemNota.style.fontSize = "xx-large";
+
+                        d3.select(document.getElementById("node_" + d.id_num)).select("circle")
+                                 .attr("r", raio+20);
+                    }
+                    else if(d[campo[4]] > 0 && !clickada ){
+                        document.getElementById("attSemNota").remove();
+                        d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
+                        .attr("r", raio+10);
+
+                    }
+                    else if(clickada){
 						exibirGrafico(d);
                         d3.select(document.getElementById("node_" + d.id_num)).select("circle")
                                 .attr("r", raio+20);

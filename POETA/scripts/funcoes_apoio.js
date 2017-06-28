@@ -194,12 +194,12 @@ function converteData(data){
 						.style("left", (node.y+68)+"px")
 						.style("top", (node.x-949-65*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
-				d3.select(document.getElementById("body")).append("h1")
-						.attr("name","balao")
-						.attr("class","qtdDesistentes")
-						.style("left", (node.y+54)+"px")
-						.style("top", (node.x-1146-65*qntBaloes)+"px")
-						.text(node[campo[3]]);
+				// d3.select(document.getElementById("body")).append("h1")
+				// 		.attr("name","balao")
+				// 		.attr("class","qtdDesistentes")
+				// 		.style("left", (node.y+54)+"px")
+				// 		.style("top", (node.x-1146-65*qntBaloes)+"px")
+				// 		.text(node[campo[3]]);
 			}
 		}
 		for(var i = 0; i < node.children.length; i++){
@@ -282,14 +282,24 @@ function exibirGrafico(d) {
                 .duration(200)
                 .style("opacity", "1");
 
+
+				document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
+				document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
+				document.getElementById("quadro_3").innerText = "Desistentes";
+
 				header.text(d["source_Level1"]);
-				header1.text((d.depth > 1) ? "Atividade: " + d["source_Level4"] : "");
+				header1.text((d.depth >= 1) ? "Atividade: " + d["source_Level4"] : "");
+				header2.html("");
+				document.getElementById("btnEntregas").innerText = "Prazos";
+				
 
 				fedSpend.text(formatCurrency(d[campo[0]]));
 				stateSpend.text(formatCurrency(d[campo[1]]));
 				localSpend.text(formatCurrency(d[campo[2]]));
-				toolTip.style("left", (d3.event.pageX - 220) + "px")
-                .style("top", (d3.event.pageY - 60) + "px");
+
+				if(!entregas)
+					toolTip.style("left", (d3.event.pageX - 220) + "px")
+               	 .style("top", (d3.event.pageY - 60) + "px");
 				}
 			}
 			else {
@@ -378,6 +388,8 @@ function exibirEntregas(){
 			fedSpend.text(formatCurrency(em_dia));
 			stateSpend.text(formatCurrency(atrasados));
 			localSpend.text(formatCurrency(nao_entregaram));
+
+			document.getElementById("btnEntregas").innerText = "Notas";
 }
 
 function esconderFolhas(d){
