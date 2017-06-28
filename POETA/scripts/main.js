@@ -403,7 +403,7 @@ function update(source) {
 				}
                 else{
 
-					if(d[campo[4]] > 0 && clickada ){
+					if(d[campo[4]] < 0 && clickada ){
                         lastNode = d;
                         lastNodeId = d.id_num;
 
@@ -423,7 +423,7 @@ function update(source) {
                         d3.select(document.getElementById("node_" + d.id_num)).select("circle")
                                  .attr("r", raio+20);
                     }
-                    else if(d[campo[4]] > 0 && !clickada ){
+                    else if(d[campo[4]] < 0 && !clickada ){
                         document.getElementById("attSemNota").remove();
                         d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
                         .attr("r", raio+10);

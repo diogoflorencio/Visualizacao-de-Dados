@@ -22,8 +22,10 @@ for(var i = 0; i < atividades.length; i++){
 					to: makeDataWithTime(prazos[i].fim),
 					customClass: coresAtividades[(i)%coresAtividades.length]});
 }
-data.push({label: "",
+data.push({label: "Planejamento",
 			data: previsoes});
+data.push({label: "",
+			data: []});
 
 var fimAtvAnterior;
 var inicioAtvAtual;
