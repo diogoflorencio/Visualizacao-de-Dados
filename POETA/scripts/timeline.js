@@ -25,14 +25,51 @@ for(var i = 0; i < atividades.length; i++){
 data.push({label: "",
 			data: previsoes});
 
+var fimAtvAnterior;
+var inicioAtvAtual;
+var limiteAtvAtual;
+var fimAtvAtual;
+var inicioProxAtv;
+
 for(var i = 0; i < filhos.length; i++){
 	var entregas=[];
 	for(var j = 1; j < d.depth; j++){
-		entregas.push({label: atividades[j-1],
+		
+		if(fimAtvAnterior){
+			inicioAtvAtual = fimAtvAnterior;
+			fimAtvAnterior = undefined;
+		}
+		else{
+			inicioAtvAtual = filhos[i]["Data Inicio "+j];
+		}
+		
+		limiteAtvAtual = filhos[i]["Data Fim "+(j)]);
+		fimAtvAtual = limiteAtvAtual;
+		inicioProxAtv = converteData(filhos[i]["Data Inicio "+(j+1)]));
+		
+		if(inicioProxAtv < converteData(fimAtvAtual)){
+			fimAtvAnterior = limiteAtvAtual;
+			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)]);
+			
+			entregas.push({label: atividades[j-1],
 						type: TimelineChart.TYPE.INTERVAL,
-						from: converteData(filhos[i]["Data Inicio "+j]),
-						to: makeDataWithTime(filhos[i]["Data Fim "+j]),
+						from: converteData(inicioAtvAtual),
+						to: converteData(limiteAtvAtual),
 						customClass: coresAtividades[(j-1)%coresAtividades.length]});
+						
+			entregas.push({label: 'Paralelo',
+						type: TimelineChart.TYPE.INTERVAL,
+						from: converteData(limiteAtvAtual),
+						to: makeDataWithTime(fimAtvAtual),
+						customClass: corSobreposicao});
+		}
+		else{
+			entregas.push({label: atividades[j-1],
+						type: TimelineChart.TYPE.INTERVAL,
+						from: converteData(inicioAtvAtual),
+						to: makeDataWithTime(fimAtvAtual),
+						customClass: coresAtividades[(j-1)%coresAtividades.length]});
+		}
 	}
 	data.push({label: filhos[i]["Level18"],
 				data: entregas});
