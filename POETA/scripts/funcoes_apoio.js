@@ -257,42 +257,35 @@ function esconderGrafico(d) {
 
 
 function exibirGrafico(d) {
-
-		document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
-		document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
-		document.getElementById("quadro_3").innerText = "Desistentes";
-
 			if (typeof d.target != "undefined") {
                 d = d.target;
             }
 
             if (d.children || d._children){
-				if (detalhes){					
+				if (detalhes){
 					geraGraficoLinhas(d);
 					toolTipGrafLinhas.transition()
 					.duration(200)
 					.style("opacity", "1");
-
 				toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
                 .style("top", (d3.event.pageY + 30) + "px");
-				}
-				else{
+			}
+			else{
 
 				toolTip.transition()
                 .duration(200)
                 .style("opacity", "1");
 
-
-				document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
-				document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
-				document.getElementById("quadro_3").innerText = "Desistentes";
+				// document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
+				// document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
+				// document.getElementById("quadro_3").innerText = "Desistentes";
 
 				header.text(d["source_Level1"]);
-				header1.text((d.depth >= 1) ? "Atividade: " + d["source_Level4"] : "");
+				header1.text("Atividade: " + d.key);
 				header2.html("");
-				document.getElementById("btnEntregas").innerText = "Prazos";
-				
+				// document.getElementById("btnEntregas").innerText = "Prazos";
 
+				// console.log(d[campo[0]]);
 				fedSpend.text(formatCurrency(d[campo[0]]));
 				stateSpend.text(formatCurrency(d[campo[1]]));
 				localSpend.text(formatCurrency(d[campo[2]]));
@@ -339,22 +332,22 @@ function setTextModoPesquisa(){
 
 function exibirPrazos(){
 	esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
-	
+
 	var timeline = document.createElement("div");
 	timeline.id = "timelineGraf";
 	document.body.appendChild(timeline);
 	timeline = d3.select(document.getElementById('timelineGraf'));
-	
+
 	timeline.style("position","absolute")
 				.style("width","800px")
 				.style("height","200px")
 				.style("background", "#FFFFFF");
-	
+
 	exibirTimeline(lastNode);
 	timeline.transition()
 		.duration(200)
 		.style("opacity", "1");
-					
+
 	timeline.style("left", (d3.event.pageX - 400) + "px")
             .style("top", (d3.event.pageY + 30) + "px");
 }
@@ -407,4 +400,41 @@ function contains(element,list){
 		if(list[i] == element)
 			return true;
 	return false;
+}
+
+function onClickNo(d){
+	if(clickada){
+			if(d.linkColor == cor_AtividadeSemNota)
+				msgAttSemNota();
+			else
+					exibirGrafico(d);
+			d3.select(document.getElementById("node_" + d.id_num))
+									.select("circle")
+									.attr("r", raio+20);
+	}
+	else{
+		if(d.linkColor == cor_AtividadeSemNota)
+				document.getElementById("attSemNota").remove();
+		else {
+				esconderGrafico(d);
+				d3.select(document.getElementById("divEntregas")).remove();
+		}
+		d3.select(document.getElementById("node_" + lastNodeId))
+									.select("circle")
+									.attr("r", raio+10);
+	}
+	clickada = !clickada;
+}
+
+function msgAttSemNota(){
+	var attSemNota = document.createElement("div");
+	attSemNota.id = "attSemNota";
+	document.body.appendChild(attSemNota);
+	document.getElementById("attSemNota").innerText = "Atividade sem nota";
+	attSemNota = document.getElementById("attSemNota");
+	attSemNota.style.position = "absolute";
+	attSemNota.style.width = "280px"
+	attSemNota.style.left = (d3.event.pageX - 105) + "px";
+	attSemNota.style.top = (d3.event.pageY - 65) + "px";
+	attSemNota.style.fontSize = "x-large";
 }

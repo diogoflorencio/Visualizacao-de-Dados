@@ -166,10 +166,11 @@ function main() {
 				if(!entregas)
                     exibirEntregas();
                 else
-                    exibirGrafico(lastNode);
+                    console.log(lastNode[campo[0]]);
+                    // exibirGrafico(lastNode);
                 entregas = !entregas;
 			});
-			
+
 	d3.select(document.getElementById("btnPrazos"))
 			.on("click", function(d){
 				exibirPrazos();
@@ -329,11 +330,10 @@ function converteDados(node){
 }
 
 function update(source) {
-		sumNodesCopia(root);
+		    sumNodesCopia(root);
+
         var duration = d3.event && d3.event.altKey ? 5000 : 500;
-
         var nodes = tree.nodes(root);
-
         var depthCounter = 0;
 
         nodeRadius = d3.scale.sqrt()
@@ -344,7 +344,7 @@ function update(source) {
         nodes.forEach(function (d) {
             d.y = d.depth * 170;  //Diminuí o tamanho da perna de um nó para o outro (25/03/2016)
             d.numChildren = (d.children) ? d.children.length : 0;
-			if(d.depth <= 1){
+			      if(d.depth <= 1){
                 // var renato = [];
                 // var daux = d;
                 // getLeafs(daux, renato);
@@ -353,99 +353,48 @@ function update(source) {
                 //   d.linkColor = cor_level1_emCurso;
                 // }
                 // else
-				    d.linkColor = cor_level1;
-			}
-			else if(d.numChildren > 0 || d._children){
-                 if(d[campo[4]] > 0 ){
+				            d.linkColor = cor_level1;
+			       }
+			       else if(d.numChildren > 0 || d._children){
+                 if(d[campo[4]] > 0)
                     d.linkColor = cor_AtividadeSemNota;
-                 }
-				 else{
+				         else
                     d.linkColor = escala(d[campo[0]]/(d[campo[0]] + d[campo[1]] + d[campo[2]]));
-                }
-			}
+			       }
+			       else{
+				           var media = 0;
+				           for(var i = 1; i < d.depth-1; i++){
+					                if(isNaN(d["Nota"+i])){
+						                      d.linkColor = coresGrafico[2];
+						                      break;
+					                }
+					                media += d["Nota"+i];
+				           }
+				           media = media/i;
+				           if(d.linkColor !== coresGrafico[2]) d.linkColor = escalaNota(media);
+			      }});
 
-			else{
-				var media = 0;
-				var i;
-				for(i = 1; i < d.depth-1; i++){
-					if(isNaN(d["Nota"+i])){
-						d.linkColor = coresGrafico[2];
-						break;
-					}
-					media += d["Nota"+i];
-				}
-
-				media = media/i;
-
-				if(d.linkColor !== coresGrafico[2]) d.linkColor = escalaNota(media);
-			}
-		});
         var node = svg.selectAll("g.node")
             .data(nodes, function (d) {
-                return d.id || (d.id = ++i);
-            });
+                return d.id || (d.id = ++i);});
 
         var nodeEnter = node.enter().append("svg:g")
             .attr("class", "node")
             .attr("id",function (d) { return "node_" + d.id_num })
             .attr("name",function (d) { return d.id_num })
             .attr("transform", function (d) {
-              //console.log("aqui");
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
             .on("click", function (d) {
-				if(d.depth === 0) return
-        if(d.depth === 1){
-				      toggleAll(d);
-              update(d);
-            //  esconderFolhas(d);
-            //  console.log("aqui");
-				}
-                else{
-
-					if(d[campo[4]] < 0 && clickada ){
-                        lastNode = d;
-                        lastNodeId = d.id_num;
-
-                        var attSemNota = document.createElement("div");
-                        attSemNota.id = "attSemNota";
-                        document.body.appendChild(attSemNota);
-
-                        document.getElementById("attSemNota").innerText = "Atividade sem nota";
-
-                        attSemNota = document.getElementById("attSemNota");
-                        attSemNota.style.position = "absolute";
-                        attSemNota.style.width = "280px"
-                        attSemNota.style.left = (d3.event.pageX - 135) + "px";
-                        attSemNota.style.top = (d3.event.pageY -70) + "px";
-                        attSemNota.style.fontSize = "xx-large";
-
-                        d3.select(document.getElementById("node_" + d.id_num)).select("circle")
-                                 .attr("r", raio+20);
-                    }
-                    else if(d[campo[4]] < 0 && !clickada ){
-                        document.getElementById("attSemNota").remove();
-                        d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
-                        .attr("r", raio+10);
-
-                    }
-                    else if(clickada){
-						exibirGrafico(d);
-                        d3.select(document.getElementById("node_" + d.id_num)).select("circle")
-                                .attr("r", raio+20);
-                        lastNodeId = d.id_num;
-                        lastNode = d;
-					}
-					else{
-						esconderGrafico(d);
-                        d3.select(document.getElementById("divEntregas")).remove();
-                        d3.select(document.getElementById("node_" + lastNodeId)).select("circle")
-                                .attr("r", raio+10);
-
-					}
-					clickada = !clickada;
-				}
-        });
+                lastNodeId = d.id_num;
+                lastNode = d;
+				        if(d.depth === 0) return;
+                if(d.depth === 1){ // expandir os filhos de uma turma
+				            toggleAll(d);
+                    update(d);
+				        }
+                else onClickNo(d);
+            });
 
         nodeEnter.append("svg:circle")
             .attr("r", 1e-6)
