@@ -166,8 +166,8 @@ function main() {
 				if(!entregas)
                     exibirEntregas();
                 else
-                    console.log(lastNode[campo[0]]);
-                    // exibirGrafico(lastNode);
+                    // console.log(lastNode[campo[0]]);
+                     exibirGrafico(lastNode);
                 entregas = !entregas;
 			});
 
@@ -386,26 +386,26 @@ function update(source) {
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
             .on("click", function (d) {
-                lastNodeId = d.id_num;
-                lastNode = d;
 				        if(d.depth === 0) return;
                 if(d.depth === 1){ // expandir os filhos de uma turma
 				            toggleAll(d);
                     update(d);
 				        }
                 else onClickNo(d);
+                lastNodeId = d.id_num;
+                lastNode = d;
             });
 
         nodeEnter.append("svg:circle")
             .attr("r", 1e-6)
             .style("fill-opacity", ".8")
             .style("stroke", function (d) {
-				return "#000000";
+				          return "#000000";
             });
 
         nodeEnter.append("svg:text")
             .attr("x", function (d) {
-                labels[d.key] = this;
+                labels[d.id_num] = this;
                 return d.children || d._children ? -15 : 15;
             })
             .attr("dy", ".35em")
@@ -424,21 +424,16 @@ function update(source) {
         var nodeUpdate = node.transition()
             .duration(duration)
             .attr("transform", function (d) {
-				if(d.parent){
-					if(d.parent.x === d.x){
-						d.x = d.x-0.1;
-					}
-				}
+				        if(d.parent && d.parent.x == d.x) d.x = d.x-0.1;
                 return "translate(" + d.y + "," + d.x + ")";
             });
 
         nodeUpdate.select("circle")
             .attr("r", raio+10)
             .style("fill", function (d) {
-				return d.linkColor;
-				})
-            .style("fill-opacity", 1
-			);
+				          return d.linkColor;
+				     })
+            .style("fill-opacity", 1);
 
         nodeUpdate.select("text")
             .style("fill-opacity", 1);
@@ -447,11 +442,9 @@ function update(source) {
             .duration(duration)
             .attr("transform", function (d) {
                 return "translate(" + source.y + "," + source.x + ")";
-            })
-            .remove();
+            }).remove();
 
         nodeExit.select("circle").attr("r", 1e-6);
-
         nodeExit.select("text").style("fill-opacity", 1e-6);
 
         var link = svg.selectAll("path.link")
@@ -514,8 +507,8 @@ function update(source) {
             .attr("d", diagonal)
             .remove();
 
-            link[0].forEach(function (d){
-			d3.select(d).style("stroke", function (d, i) {
+        link[0].forEach(function (d){
+			  d3.select(d).style("stroke", function (d, i) {
 				d3.select(document.getElementById("gradient_"+d.target.id)).remove();
 				var gradient = svg.append("defs")
 				.append("linearGradient")
@@ -539,10 +532,7 @@ function update(source) {
             })
             .style("stroke-width", 2*raio)
             .style("stroke-linecap", "round")
-		});
-
-
-
+		     });
 
         // Stash the old positions for transition.
         nodes.forEach(function (d) {
@@ -550,22 +540,22 @@ function update(source) {
             d.y0 = d.y;
         });
 
-		removerBalao();
+		    removerBalao();
         colocarBalao(root);
 
         function type(d) {
-			d.frequency = +d.frequency;
-			return d;
-		}
-    }
+			       d.frequency = +d.frequency;
+			       return d;
+		    }
+}
 
 function toggleAll(d) {
-            if (d.values && d.values.actuals) {
-                d.values.actuals.forEach(toggleAll);
-                toggleNodes(d);
-            }
-            else if (d.values) {
-                d.values.forEach(toggleAll);
-                toggleNodes(d);
-            }
-        }
+      if (d.values && d.values.actuals) {
+            d.values.actuals.forEach(toggleAll);
+            toggleNodes(d);
+      }
+      else if (d.values) {
+            d.values.forEach(toggleAll);
+            toggleNodes(d);
+      }
+}

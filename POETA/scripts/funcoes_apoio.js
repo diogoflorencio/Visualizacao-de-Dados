@@ -191,15 +191,12 @@ function converteData(data){
 				d3.select(document.getElementById("body")).append("div")
 						.attr("name","balao")
 						.attr("class","balao2")
+						.attr("id", node.id_num)
 						.style("left", (node.y+68)+"px")
 						.style("top", (node.x-949-65*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
-				// d3.select(document.getElementById("body")).append("h1")
-				// 		.attr("name","balao")
-				// 		.attr("class","qtdDesistentes")
-				// 		.style("left", (node.y+54)+"px")
-				// 		.style("top", (node.x-1146-65*qntBaloes)+"px")
-				// 		.text(node[campo[3]]);
+
+
 			}
 		}
 		for(var i = 0; i < node.children.length; i++){
@@ -250,29 +247,40 @@ function esconderGrafico(d) {
 					.duration(0)
 					.style("top","-1000px");
 					apagaGrafBarras();
-
-            d3.select(labels[d.key]).transition().style("font-weight","normal").style("font-size","12");
-            d3.select(circles[d.key]).transition().style("fill-opacity",0.3);
+          // d3.select(circles[d.key]).transition().style("fill-opacity",0.3);
         }
 
 
 function exibirGrafico(d) {
-			if (typeof d.target != "undefined") {
-                d = d.target;
-            }
-
-            if (d.children || d._children){
-				if (detalhes){
-					geraGraficoLinhas(d);
-					toolTipGrafLinhas.transition()
+	if(isLeaf(d)) {
+		if(detalhes){
+				geraGraficoTempo(d);
+				toolTipGrafTempo.transition()
 					.duration(200)
 					.style("opacity", "1");
-				toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
-                .style("top", (d3.event.pageY + 30) + "px");
+				toolTipGrafTempo.style("left", (d3.event.pageX - 700) + "px")
+					.style("top", (d3.event.pageY + 30) + "px");
+		}
+		else{
+				desenharGrafBarras(d);
+				toolTipAluno.transition()
+					.duration(200)
+					.style("opacity", "1");
+				toolTipAluno.style("left", (d3.event.pageX - 220) + "px")
+					.style("top", (d3.event.pageY + 30) + "px");
+		}
+	}
+		else {
+			if (detalhes){
+					geraGraficoLinhas(d);
+					toolTipGrafLinhas.transition()
+							.duration(200)
+							.style("opacity", "1");
+					toolTipGrafLinhas.style("left", (d3.event.pageX - 400) + "px")
+              .style("top", (d3.event.pageY + 30) + "px");
 			}
 			else{
-
-				toolTip.transition()
+					toolTip.transition()
                 .duration(200)
                 .style("opacity", "1");
 
@@ -286,41 +294,14 @@ function exibirGrafico(d) {
 				// document.getElementById("btnEntregas").innerText = "Prazos";
 
 				// console.log(d[campo[0]]);
-				fedSpend.text(formatCurrency(d[campo[0]]));
-				stateSpend.text(formatCurrency(d[campo[1]]));
-				localSpend.text(formatCurrency(d[campo[2]]));
-
-				if(!entregas)
-					toolTip.style("left", (d3.event.pageX - 220) + "px")
-               	 .style("top", (d3.event.pageY - 60) + "px");
-				}
+				fedSpend.text(d[campo[0]]);
+				stateSpend.text(d[campo[1]]);
+				localSpend.text(d[campo[2]]);
+				toolTip.style("left", (d3.event.pageX - 220) + "px")
+               .style("top", (d3.event.pageY - 60) + "px");
 			}
-			else {
-				if(detalhes){
-					geraGraficoTempo(d);
-					toolTipGrafTempo.transition()
-					.duration(200)
-					.style("opacity", "1");
-
-					toolTipGrafTempo.style("left", (d3.event.pageX - 700) + "px")
-                .style("top", (d3.event.pageY + 30) + "px");
-				}
-				else{
-				nodeAux = d;
-				toolTipAluno.transition()
-				.duration(200)
-				.style("opacity", "1");
-
-				desenharGrafBarras(d);
-
-				toolTipAluno.style("left", (d3.event.pageX - 220) + "px")
-                .style("top", (d3.event.pageY + 30) + "px");
-				}
-
-			}
-
-            d3.select(labels[d.key]).transition().style("font-weight","bold").style("font-size","16");
-        }
+		}
+}
 
 function setTextModoPesquisa(){
 	var div_mode_pesq = document.getElementById("modo_pesquisa");
@@ -353,20 +334,18 @@ function exibirPrazos(){
 }
 
 function exibirEntregas(){
-			//esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
-			document.getElementById("quadro_1").innerText = "No prazo";
-			document.getElementById("quadro_2").innerText = "Atrasados";
-			document.getElementById("quadro_3").innerText = "Não entregue";
-
 			var filhos = [];
-			getLeafs(lastNode, filhos);
-			var inicioAtv = filhos[0]["Data Inicio "+lastNode.depth];
+			var node = lastNode;
+			getLeafs(node, filhos);
+			var inicioAtv = filhos[0]["Data Inicio " + lastNode.depth];
 			var fimAtv = filhos[0]["Data Fim "+lastNode.depth];
 			var em_dia = 0, atrasados = 0, nao_entregaram = 0;
 
-			header1.text("Atividade: "+lastNode.key);
-			header2.html( " inicio: " + inicioAtv + " - " +
-			 							" fim: " + fimAtv);
+			document.getElementById("quadro_1").innerText = "No prazo";
+			document.getElementById("quadro_2").innerText = "Atrasados";
+			document.getElementById("quadro_3").innerText = "Não entregue";
+			document.getElementById("btnEntregas").innerText = "Notas";
+			header2.html( " inicio: " + inicioAtv + " - " + " fim: " + fimAtv);
 
 			for(var i = 0; i < filhos.length; i++){
 				var filhoAtual = filhos[i];
@@ -378,8 +357,6 @@ function exibirEntregas(){
 			fedSpend.text(formatCurrency(em_dia));
 			stateSpend.text(formatCurrency(atrasados));
 			localSpend.text(formatCurrency(nao_entregaram));
-
-			document.getElementById("btnEntregas").innerText = "Notas";
 }
 
 function esconderFolhas(d){
@@ -404,7 +381,8 @@ function contains(element,list){
 
 function onClickNo(d){
 	if(clickada){
-			if(d.linkColor == cor_AtividadeSemNota)
+			d3.select(labels[d.id_num]).transition().style("font-weight","bold").style("font-size","16");
+			if(d.linkColor == cor_AtividadeSemNota && !detalhes)
 				msgAttSemNota();
 			else
 					exibirGrafico(d);
@@ -413,7 +391,8 @@ function onClickNo(d){
 									.attr("r", raio+20);
 	}
 	else{
-		if(d.linkColor == cor_AtividadeSemNota)
+		d3.select(labels[d.id_num]).transition().style("font-weight","normal").style("font-size","12");
+		if(document.getElementById("attSemNota"))
 				document.getElementById("attSemNota").remove();
 		else {
 				esconderGrafico(d);
@@ -423,6 +402,7 @@ function onClickNo(d){
 									.select("circle")
 									.attr("r", raio+10);
 	}
+
 	clickada = !clickada;
 }
 
@@ -437,4 +417,8 @@ function msgAttSemNota(){
 	attSemNota.style.left = (d3.event.pageX - 105) + "px";
 	attSemNota.style.top = (d3.event.pageY - 65) + "px";
 	attSemNota.style.fontSize = "x-large";
+}
+
+function isLeaf(d){
+	return !(d.children || d._children);
 }
