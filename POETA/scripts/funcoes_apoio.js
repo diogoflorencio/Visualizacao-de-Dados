@@ -195,8 +195,6 @@ function converteData(data){
 						.style("left", (node.y+68)+"px")
 						.style("top", (node.x-949-65*qntBaloes)+"px")
 						.text(""+node[campo[3]]+" Desistência(s)");
-
-
 			}
 		}
 		for(var i = 0; i < node.children.length; i++){
@@ -280,20 +278,18 @@ function exibirGrafico(d) {
               .style("top", (d3.event.pageY + 30) + "px");
 			}
 			else{
-					toolTip.transition()
-                .duration(200)
-                .style("opacity", "1");
+				sumNodesCopia(d);
+				toolTip.transition()
+               .duration(200)
+               .style("opacity", "1");
 
-				// document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
-				// document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
-				// document.getElementById("quadro_3").innerText = "Desistentes";
-
+				document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
+				document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
+				document.getElementById("quadro_3").innerText = "Desistentes";
+				document.getElementById("btnEntregas").innerText = "Prazos";
 				header.text(d["source_Level1"]);
 				header1.text("Atividade: " + d.key);
 				header2.html("");
-				// document.getElementById("btnEntregas").innerText = "Prazos";
-
-				// console.log(d[campo[0]]);
 				fedSpend.text(d[campo[0]]);
 				stateSpend.text(d[campo[1]]);
 				localSpend.text(d[campo[2]]);
@@ -421,4 +417,20 @@ function msgAttSemNota(){
 
 function isLeaf(d){
 	return !(d.children || d._children);
+}
+
+function setToolTip(){
+	if(document.getElementById("quadro_1").textContent == "Alunos com nota >= 7")
+			exibirEntregas();
+	else{
+		sumNodesCopia(lastNode);
+		document.getElementById("quadro_1").innerText = "Alunos com nota >= 7";
+		document.getElementById("quadro_2").innerText = "Alunos com nota < 7";
+		document.getElementById("quadro_3").innerText = "Desistentes";
+		document.getElementById("btnEntregas").innerText = "Prazos";
+		header2.html("");
+		fedSpend.text(lastNode[campo[0]]);
+		stateSpend.text(lastNode[campo[1]]);
+		localSpend.text(lastNode[campo[2]]);
+	}
 }
