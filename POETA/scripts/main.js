@@ -159,7 +159,17 @@ function main() {
 
     var nodeRadius;
 
-    d3.select(document.getElementById("btnEntregas"))
+  d3.select(document.getElementById("sairQuadro"))
+  			.on("click", function(d){
+  				sair();
+  		});
+
+      d3.select(document.getElementById("sairGraficBarras"))
+      			.on("click", function(d){
+      				sair();
+  		});
+
+  d3.select(document.getElementById("btnEntregas"))
 			.on("click", function(d){
 				setToolTip();
 			});

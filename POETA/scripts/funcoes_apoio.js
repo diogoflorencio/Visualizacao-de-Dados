@@ -433,3 +433,12 @@ function setToolTip(){
 		localSpend.text(lastNode[campo[2]]);
 	}
 }
+
+function sair(){
+	esconderGrafico(lastNode);
+	d3.select(document.getElementById("node_" + lastNodeId))
+								.select("circle")
+								.attr("r", raio+10);
+	d3.select(labels[lastNode.id_num]).transition().style("font-weight","normal").style("font-size","12");
+	clickada = !clickada;
+}
