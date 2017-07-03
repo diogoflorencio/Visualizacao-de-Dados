@@ -2,7 +2,7 @@ function converteData(data){
 	 return new Date(Number(data.slice(6,10)), Number(data.slice(3,5)), Number(data.slice(0,2)));
  }
 
-     function removeEmptyNodes(node,parent,id) {
+function removeEmptyNodes(node,parent,id) {
 		if(!node.values) return
         if(node.key === ""){
 			var tam = parent.values.length;
@@ -24,7 +24,7 @@ function converteData(data){
     var nos_apagados = [];
     var opcoes = [false, true, true, true, true, true, true, false];
 
-    function setar_opcoes(op){
+function setar_opcoes(op){
 		switch (op){
 			case "faixa_etaria":
 				opcoes[0] = !opcoes[0];
@@ -53,7 +53,7 @@ function converteData(data){
 		}
 	}
 
-    function filtrar(){
+  function filtrar(){
 		//console.log(root);
 		if(opcoes[7]) {
 			escala = d3.scale.linear().range(coresDaltonico);
@@ -109,7 +109,7 @@ function converteData(data){
 		update(root);
 	}
 
-	function recuperarNosFiltrados(){
+function recuperarNosFiltrados(){
 		var pai;
 		for(var i=nos_apagados.length-1; i >= 0; i--){
 			if(opcoes[1] && nos_apagados[i][0]["sexo"]==="M"
@@ -131,7 +131,7 @@ function converteData(data){
 		}
 	}
 
-    function setAnimacao(nodes) {
+function setAnimacao(nodes) {
         for (var y = 0; y < nodes.length; y++) {
             var node = nodes[y];
            if (node.children) {
@@ -156,7 +156,7 @@ function converteData(data){
        }
     }
 
-    function getLeafs(node,leafs){
+function getLeafs(node,leafs){
 		var childrens;
 		if(node.children){
 			node[campo[4]] = 0;
@@ -179,7 +179,7 @@ function converteData(data){
 		}
 	}
 
-	function colocarBalao(node){
+function colocarBalao(node){
 		if(!node.children){
 			return;
 		}
@@ -202,11 +202,11 @@ function converteData(data){
 		}
 	}
 
-	function removerBalao(){
+function removerBalao(){
 		d3.selectAll(document.getElementsByName("balao")).remove();
 	}
 
- var formatCurrency = function (d) {
+var formatCurrency = function (d) {
         return d
     };
 
@@ -247,7 +247,6 @@ function esconderGrafico(d) {
 					apagaGrafBarras();
           // d3.select(circles[d.key]).transition().style("fill-opacity",0.3);
         }
-
 
 function exibirGrafico(d) {
 	if(isLeaf(d)) {
