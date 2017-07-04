@@ -8,10 +8,18 @@ var inicioAtv;
 var fimAtv;
 var filhos = [];
 getLeafs(d,filhos);
-d3.select(element).style("height", (filhos.length*35 + 70) + "px");
+var timelineGraf = d3.select(element);
 var atividades = getActivitiesName(d);
 var prazos = getActivitiesPrazos(d,filhos);
+var tip = d3.tip()
+		.attr('class', 'd3-tip')
+		.offset([-10, 0])
+		.html(function(d) {
+			console.log(d);
+		return "<strong> Teste:</strong> <span style='color:red'> Testando </span>";
+	});
 
+timelineGraf.style("height", (filhos.length*35 + 70) + "px");
 var data = [];
 
 var previsoes=[];
@@ -83,6 +91,12 @@ for(var i = 0; i < filhos.length; i++){
                 return d.at || `${d.from}<br>${d.to}`;
             }
         }).onVizChange(e => console.log(e));
+        
+        var svg = timelineGraf.select("svg");
+        svg.call(tip);
+        svg.selectAll("."+corSobreposicao)
+					.on('mouseover', tip.show)
+					.on('mouseout', tip.hide);
 }
 
 function getActivitiesName(d){

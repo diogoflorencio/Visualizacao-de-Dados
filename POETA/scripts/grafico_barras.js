@@ -25,7 +25,7 @@ function criarGrafBarras(){
 		.offset([-10, 0])
 		.html(function(d) {
 		return "<strong>"+d.atividade+":</strong> <span style='color:red'>" + d.nota + "</span>";
-	})
+	});
 
 	grafBarra = d3.select(document.getElementById("grafico")).append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -60,5 +60,5 @@ function desenharGrafBarras(d){
 					.attr("height", function(d) { return height - y(d.nota); })
 					.style("fill", function(d) { return escalaNota(d.nota)})
 					.on('mouseover', tip.show)
-					.on('mouseout', tip.hide)
+					.on('mouseout', tip.hide);
 }
