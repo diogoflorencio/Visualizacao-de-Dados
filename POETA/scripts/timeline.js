@@ -120,12 +120,13 @@ function addTimelineDetalhe(info){
             .style("top", (d3.event.pageY + 30) + "px");
 	
 	var data = [];
-	for(var i=0; i < info.atividades.lenght; i++){
+	for(var i=0; i < info.atividades.length; i++){
+		console.log(filhos[info.aluno]["Data Inicio "+(info.atividades[i]+1)]);
 		data.push({label: nomesAtividades[info.atividades[i]],
 					data: [{label: "",
 						type: TimelineChart.TYPE.INTERVAL,
-						from: converteData(filhos[info.aluno]["Data Inicio "+info.atividades[i]]),
-						to: makeDataWithTime(filhos[info.aluno]["Data Fim "+info.atividades[i]]),
+						from: converteData(filhos[info.aluno]["Data Inicio "+(info.atividades[i]+1)]),
+						to: makeDataWithTime(filhos[info.aluno]["Data Fim "+(info.atividades[i]+1)]),
 						customClass: coresAtividades[(info.atividades[i])%coresAtividades.length]}]});
 	}
 	
