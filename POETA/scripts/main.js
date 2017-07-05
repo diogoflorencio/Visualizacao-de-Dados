@@ -179,6 +179,16 @@ function main() {
 				exibirPrazos();
 			});
 
+    d3.select(document.getElementById("sairGraficLinha"))
+      			.on("click", function(d){
+      				sair();
+    });
+
+    d3.select(document.getElementById("sairGraficTempo"))
+            .on("click", function(d){
+              sair();
+    });
+
     d3.csv("data/DataBase.csv", function (csv) {
 
         var data = [];
