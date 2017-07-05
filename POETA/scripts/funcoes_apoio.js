@@ -320,9 +320,6 @@ function exibirPrazos(){
 				.style("background", "#FFFFFF");
 
 	exibirTimeline(lastNode);
-	timeline.transition()
-		.duration(200)
-		.style("opacity", "1");
 
 	timeline.style("left", (d3.event.pageX - 400) + "px")
             .style("top", (d3.event.pageY + 30) + "px");

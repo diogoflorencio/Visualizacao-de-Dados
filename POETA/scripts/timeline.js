@@ -1,30 +1,26 @@
 const coresAtividades=['darkblue','lightgreen','lightblue','darkgreen','darkorange','lightpurple',
 						'darkred','lightorange','darkpurple','lightred','darkgold','lightgold'];
 const corSobreposicao="sobreposicao";
+var nomesAtividades;
+var prazos;
+var filhos;
 
 function exibirTimeline(d){
 const element = document.getElementById('timelineGraf');
 var inicioAtv;
 var fimAtv;
-var filhos = [];
+filhos = [];
 getLeafs(d,filhos);
 var timelineGraf = d3.select(element);
-var atividades = getActivitiesName(d);
-var prazos = getActivitiesPrazos(d,filhos);
-var tip = d3.tip()
-		.attr('class', 'd3-tip')
-		.offset([-10, 0])
-		.html(function(d) {
-			console.log(d);
-		return "<strong> Teste:</strong> <span style='color:red'> Testando </span>";
-	});
+nomesAtividades = getActivitiesName(d);
+prazos = getActivitiesPrazos(d,filhos);
 
 timelineGraf.style("height", (filhos.length*35 + 70) + "px");
 var data = [];
 
 var previsoes=[];
-for(var i = 0; i < atividades.length; i++){
-	previsoes.push({label: atividades[i],
+for(var i = 0; i < nomesAtividades.length; i++){
+	previsoes.push({label: nomesAtividades[i],
 					type: TimelineChart.TYPE.INTERVAL,
 					from: converteData(prazos[i].inicio),
 					to: makeDataWithTime(prazos[i].fim),
@@ -61,7 +57,7 @@ for(var i = 0; i < filhos.length; i++){
 			fimAtvAnterior = makeDataWithTime(limiteAtvAtual);
 			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)];
 			
-			entregas.push({label: atividades[j-1],
+			entregas.push({label: nomesAtividades[j-1],
 						type: TimelineChart.TYPE.INTERVAL,
 						from: inicioAtvAtual,
 						to: converteData(limiteAtvAtual),
@@ -71,10 +67,12 @@ for(var i = 0; i < filhos.length; i++){
 						type: TimelineChart.TYPE.INTERVAL,
 						from: converteData(limiteAtvAtual),
 						to: makeDataWithTime(fimAtvAtual),
-						customClass: corSobreposicao});
+						customClass: corSobreposicao,
+						atividades: [j-1,j],
+						aluno: i});
 		}
 		else{
-			entregas.push({label: atividades[j-1],
+			entregas.push({label: nomesAtividades[j-1],
 						type: TimelineChart.TYPE.INTERVAL,
 						from: inicioAtvAtual,
 						to: makeDataWithTime(fimAtvAtual),
@@ -90,13 +88,60 @@ for(var i = 0; i < filhos.length; i++){
             tip: function(d) {
                 return d.at || `${d.from}<br>${d.to}`;
             }
-        }).onVizChange(e => console.log(e));
+        });
         
-        var svg = timelineGraf.select("svg");
-        svg.call(tip);
+        setOnMouseOver(timelineGraf);
+}
+
+function setOnMouseOver(timeline){
+	var svg = timeline.select("svg");
+        
         svg.selectAll("."+corSobreposicao)
-					.on('mouseover', tip.show)
-					.on('mouseout', tip.hide);
+					.on('mouseover', function(d){
+							addTimelineDetalhe(d);
+						})
+					.on('mouseout', function(d){
+							removeTimelineDetalhe();
+						});
+}
+
+function addTimelineDetalhe(info){
+	var timelineElement = document.createElement("div");
+	timelineElement.id = "timelineDetalhe";
+	document.body.appendChild(timelineElement);
+	
+	console.log(info);
+	var timeline = d3.select(timelineElement);
+	timeline.style("position","absolute")
+			.style("background","#FFFFFF")
+			.style("height", (info.atividades.length*35 + 70) + "px")
+			.style("width","500px")
+			.style("left", (d3.event.pageX - 400) + "px")
+            .style("top", (d3.event.pageY + 30) + "px");
+	
+	var data = [];
+	for(var i=0; i < info.atividades.lenght; i++){
+		data.push({label: nomesAtividades[info.atividades[i]],
+					data: [{label: "",
+						type: TimelineChart.TYPE.INTERVAL,
+						from: converteData(filhos[info.aluno]["Data Inicio "+info.atividades[i]]),
+						to: makeDataWithTime(filhos[info.aluno]["Data Fim "+info.atividades[i]]),
+						customClass: coresAtividades[(info.atividades[i])%coresAtividades.length]}]});
+	}
+	
+	const x = new TimelineChart(timelineElement, data, {
+            enableLiveTimer: true,
+            tip: function(d) {
+                return d.at || `${d.from}<br>${d.to}`;
+            }
+        });
+}
+
+function removeTimelineDetalhe(){
+	var timelineDetalhe = document.getElementById('timelineDetalhe');
+	if(timelineDetalhe){
+		timelineDetalhe.parentNode.removeChild(timelineDetalhe);
+	}
 }
 
 function getActivitiesName(d){
