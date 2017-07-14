@@ -151,7 +151,7 @@ function removeTimelineDetalhe(){
 
 function getActivitiesName(d){
 	var array = [];
-	const depth = d.depth-2;
+	const depth = d.depth-2; //Retira dois pois as atividades começam na profundidade 2
 	for(var i = 0; i <= depth; i++){
 		array[depth - i] = d.key;
 		d = d.parent;
@@ -161,8 +161,9 @@ function getActivitiesName(d){
 
 function getActivitiesPrazos(d,filhos){
 	var prazos=[];
+	const depth = d.depth-1; //Retira 1 pois a primeira atividade na verdade é apenas a identificação da turna
 	for(var i = 0; i < filhos.length; i++){
-		if(filhos[i]["Data Fim "+d.depth]){
+		if(filhos[i]["Data Fim "+depth]){
 			for(var j=1; j < d.depth; j++){
 				prazos.push({inicio: filhos[i]["Data Inicio "+j],
 							fim: filhos[i]["Data Fim "+j]});
