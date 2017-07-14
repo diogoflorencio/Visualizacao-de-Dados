@@ -321,8 +321,8 @@ function exibirPrazos(){
 
 	exibirTimeline(lastNode);
 
-	timeline.style("left", (d3.event.pageX - 400) + "px")
-            .style("top", (d3.event.pageY + 30) + "px");
+	timeline.style("left", (d3.event.pageX - 100) + "px")
+            .style("top", (d3.event.pageY + 10) + "px");
 }
 
 function exibirEntregas(){

@@ -121,7 +121,7 @@ function addTimelineDetalhe(info){
 			.style("background","#FFFFFF")
 			.style("height", (info.atividades.length*35 + 70) + "px")
 			.style("width","500px")
-			.style("left", (d3.event.pageX - 400) + "px")
+			.style("left", (d3.event.pageX - 200) + "px")
             .style("top", (d3.event.pageY + 30) + "px");
 	
 	var data = [];
