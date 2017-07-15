@@ -40,7 +40,7 @@ var inicioProxAtv;
 for(var i = 0; i < filhos.length; i++){
 	var entregas=[];
 	for(var j = 1; j < d.depth; j++){
-		
+
 		if(fimAtvAnterior){
 			inicioAtvAtual = fimAtvAnterior;
 			fimAtvAnterior = undefined;
@@ -48,21 +48,21 @@ for(var i = 0; i < filhos.length; i++){
 		else{
 			inicioAtvAtual = converteData(filhos[i]["Data Inicio "+j]);
 		}
-		
+
 		limiteAtvAtual = filhos[i]["Data Fim "+(j)];
 		fimAtvAtual = limiteAtvAtual;
 		inicioProxAtv = converteData(filhos[i]["Data Inicio "+(j+1)]);
-		
+
 		if(j < d.depth-1 && inicioProxAtv <= converteData(fimAtvAtual)){
 			fimAtvAnterior = makeDataWithTime(limiteAtvAtual);
 			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)];
-			
+
 			entregas.push({label: nomesAtividades[j-1],
 						type: TimelineChart.TYPE.INTERVAL,
 						from: inicioAtvAtual,
 						to: converteData(limiteAtvAtual),
 						customClass: coresAtividades[(j-1)%coresAtividades.length]});
-						
+
 			entregas.push({label: 'Paralelo',
 						type: TimelineChart.TYPE.INTERVAL,
 						from: converteData(limiteAtvAtual),
@@ -89,13 +89,13 @@ for(var i = 0; i < filhos.length; i++){
                 return d.at || `${d.from}<br>${d.to}`;
             }
         });
-        
+
         setOnMouseOver(timelineGraf);
 }
 
 function setOnMouseOver(timeline){
 	var svg = timeline.select("svg");
-        
+
         svg.selectAll("."+corSobreposicao)
 					.on('mouseover', function(d){
 							addTimelineDetalhe(d);
@@ -109,7 +109,7 @@ function addTimelineDetalhe(info){
 	var timelineElement = document.createElement("div");
 	timelineElement.id = "timelineDetalhe";
 	document.body.appendChild(timelineElement);
-	
+
 	console.log(info);
 	var timeline = d3.select(timelineElement);
 	timeline.style("position","absolute")
@@ -118,7 +118,7 @@ function addTimelineDetalhe(info){
 			.style("width","500px")
 			.style("left", (d3.event.pageX - 400) + "px")
             .style("top", (d3.event.pageY + 30) + "px");
-	
+
 	var data = [];
 	for(var i=0; i < info.atividades.length; i++){
 		console.log(filhos[info.aluno]["Data Inicio "+(info.atividades[i]+1)]);
@@ -129,7 +129,7 @@ function addTimelineDetalhe(info){
 						to: makeDataWithTime(filhos[info.aluno]["Data Fim "+(info.atividades[i]+1)]),
 						customClass: coresAtividades[(info.atividades[i])%coresAtividades.length]}]});
 	}
-	
+
 	const x = new TimelineChart(timelineElement, data, {
             enableLiveTimer: true,
             tip: function(d) {

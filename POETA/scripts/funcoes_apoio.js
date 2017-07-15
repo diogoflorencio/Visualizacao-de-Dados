@@ -308,10 +308,25 @@ function setTextModoPesquisa(){
 
 function exibirPrazos(){
 	esconderGrafico(d3.select(document.getElementById("node_"+lastNodeId)));
-
 	var timeline = document.createElement("div");
 	timeline.id = "timelineGraf";
 	document.body.appendChild(timeline);
+
+	var button  = document.createElement("button");
+	button.id = "sairTimelineGraf";
+	button.innerText = "X";
+	timeline.append(button);
+
+	d3.select(document.getElementById('sairTimelineGraf'))
+				.style("position","absolute")
+				.style("left", 800 + "px")
+			  .style("top", -2 + "px");
+
+	d3.select(document.getElementById("sairTimelineGraf"))
+								.on("click", function(d){
+									sair();
+	});
+
 	timeline = d3.select(document.getElementById('timelineGraf'));
 
 	timeline.style("position","absolute")
