@@ -40,8 +40,18 @@ var inicioProxAtv;
 for(var i = 0; i < filhos.length; i++){
 	var entregas=[];
 	for(var j = 1; j < d.depth; j++){
+		limiteAtvAtual = filhos[i]["Data Fim "+(j)];
+		fimAtvAtual = limiteAtvAtual;
+		inicioProxAtv = filhos[i]["Data Inicio "+(j+1)];
+		var fimProxAtv = filhos[i]["Data Fim "+(j+1)];
+		console.log(fimAtvAtual);
+		console.log(fimProxAtv);
 
-		if(fimAtvAnterior){
+		if(fimAtvAtual == "" || fimAtvAtual == undefined){ //Atividade não foi entregue
+			continue;
+		}
+
+		if(fimAtvAnterior){ //Teve sobreposicao
 			inicioAtvAtual = fimAtvAnterior;
 			fimAtvAnterior = undefined;
 		}
@@ -49,11 +59,7 @@ for(var i = 0; i < filhos.length; i++){
 			inicioAtvAtual = converteData(filhos[i]["Data Inicio "+j]);
 		}
 
-		limiteAtvAtual = filhos[i]["Data Fim "+(j)];
-		fimAtvAtual = limiteAtvAtual;
-		inicioProxAtv = converteData(filhos[i]["Data Inicio "+(j+1)]);
-
-		if(j < d.depth-1 && inicioProxAtv <= converteData(fimAtvAtual)){
+		if((fimProxAtv !== "" && fimProxAtv !== undefined) && j < d.depth-1 && converteData(inicioProxAtv) <= converteData(fimAtvAtual)){
 			fimAtvAnterior = makeDataWithTime(limiteAtvAtual);
 			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)];
 
@@ -110,18 +116,16 @@ function addTimelineDetalhe(info){
 	timelineElement.id = "timelineDetalhe";
 	document.body.appendChild(timelineElement);
 
-	console.log(info);
 	var timeline = d3.select(timelineElement);
 	timeline.style("position","absolute")
 			.style("background","#FFFFFF")
 			.style("height", (info.atividades.length*35 + 70) + "px")
 			.style("width","500px")
-			.style("left", (d3.event.pageX - 400) + "px")
+			.style("left", (d3.event.pageX - 200) + "px")
             .style("top", (d3.event.pageY + 30) + "px");
 
 	var data = [];
 	for(var i=0; i < info.atividades.length; i++){
-		console.log(filhos[info.aluno]["Data Inicio "+(info.atividades[i]+1)]);
 		data.push({label: nomesAtividades[info.atividades[i]],
 					data: [{label: "",
 						type: TimelineChart.TYPE.INTERVAL,
@@ -147,7 +151,7 @@ function removeTimelineDetalhe(){
 
 function getActivitiesName(d){
 	var array = [];
-	const depth = d.depth-2;
+	const depth = d.depth-2; //Retira dois pois as atividades começam na profundidade 2
 	for(var i = 0; i <= depth; i++){
 		array[depth - i] = d.key;
 		d = d.parent;
@@ -157,8 +161,9 @@ function getActivitiesName(d){
 
 function getActivitiesPrazos(d,filhos){
 	var prazos=[];
+	const depth = d.depth-1; //Retira 1 pois a primeira atividade na verdade é apenas a identificação da turna
 	for(var i = 0; i < filhos.length; i++){
-		if(filhos[i]["Data Fim "+d.depth]){
+		if(filhos[i]["Data Fim "+depth]){
 			for(var j=1; j < d.depth; j++){
 				prazos.push({inicio: filhos[i]["Data Inicio "+j],
 							fim: filhos[i]["Data Fim "+j]});
