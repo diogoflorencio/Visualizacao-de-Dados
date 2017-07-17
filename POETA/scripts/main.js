@@ -404,7 +404,9 @@ function update(source) {
 				            toggleAll(d);
                     update(d);
 				        }
-                else onClickNo(d);
+                else {
+                	onClickNo(d);
+                }
                 lastNodeId = d.id_num;
                 lastNode = d;
             });

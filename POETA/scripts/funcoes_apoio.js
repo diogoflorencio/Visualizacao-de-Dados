@@ -175,7 +175,9 @@ function getLeafs(node,leafs){
 			}
 		}
 		else{
-			leafs.push(node);
+			if(node.id != "noGeral"){
+				leafs.push(node);
+			}
 		}
 	}
 
@@ -315,7 +317,7 @@ function exibirPrazos(){
 	var button  = document.createElement("button");
 	button.id = "sairTimelineGraf";
 	button.innerText = "X";
-	timeline.append(button);
+	timeline.appendChild(button);
 
 	d3.select(document.getElementById('sairTimelineGraf'))
 				.style("position","absolute")
@@ -453,4 +455,41 @@ function sair(){
 								.attr("r", raio+10);
 	d3.select(labels[lastNode.id_num]).transition().style("font-weight","normal").style("font-size","12");
 	clickada = !clickada;
+}
+
+function createNosGerais(r){
+	var leafs = []; 
+	getLeafs(r, leafs);
+
+	var lastParentId = "";
+	var notas = [];
+	var noGeralDaVez;
+	for(var i = 0; i < leafs.length; i++){
+		if(leafs[i].parent.id_num != lastParentId){
+			lastParentId = leafs[i].parent.id_num;
+			noGeralDaVez = copiarObjecto(leafs[i]);
+			leafs[i].parent._children.push(noGeralDaVez);
+		}
+		else{
+			for(var j = 1; j < leafs[i].depth-1; j++){
+			    if(isNaN(leafs[i]["Nota"+j])){
+					break;
+				}
+				noGeralDaVez["Nota"+j] += leafs[i]["Nota"+j];
+			}
+		}
+	}
+
+	function copiarObjecto(obj) {
+ 		 if (obj === null || typeof obj !== 'object') {
+  		return obj;
+  		}
+  		var temp = obj.constructor();
+  		for (var key in obj) {
+  		temp[key] = copiarObjecto(obj[key]);
+  		}
+  		temp.id_num = "noGeral";
+  		temp.key = "";
+  		return temp;
+	}
 }
