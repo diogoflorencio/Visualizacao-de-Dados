@@ -458,7 +458,7 @@ function sair(){
 }
 
 function createNosGerais(r){
-	var leafs = []; 
+	var leafs = [];
 	getLeafs(r, leafs);
 
 	var lastParentId = "";
@@ -477,6 +477,17 @@ function createNosGerais(r){
 				}
 				noGeralDaVez["Nota"+j] += leafs[i]["Nota"+j];
 			}
+		}
+	}
+
+	function getNoGerais(node,nosGerais){
+		if(node.id_num == "noGeral")
+			nosGerais.push(node);
+		else {
+			for(var i = 0; i < node.children.length; i++)
+				getNoGerais(node.children[i], nosGerais);
+				for(var j = 0; j < node.children.length; j++)
+					getNoGerais(node._children[j], nosGerais)
 		}
 	}
 
