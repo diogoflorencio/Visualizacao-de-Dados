@@ -234,6 +234,7 @@ function main() {
         // Initialize the display to show a few nodes.
         root.values.forEach(toggleAll);
         update(root);
+        createNosGerais(root);
 
         toggleButtons(0);
 
@@ -401,9 +402,9 @@ function update(source) {
             .on("click", function (d) {
 				        if(d.depth === 0) return;
                 if(d.depth === 1){ // expandir os filhos de uma turma
-				            toggleAll(d);
+				    toggleAll(d);
                     update(d);
-				        }
+				}
                 else {
                 	onClickNo(d);
                 }

@@ -460,47 +460,58 @@ function sair(){
 function createNosGerais(r){
 	var leafs = [];
 	getLeafs(r, leafs);
-
-	var lastParentId = "";
-	var notas = [];
-	var noGeralDaVez;
-	for(var i = 0; i < leafs.length; i++){
+	var lastParentId = leafs[0].parent.id_num;
+	var noGeralDaVez = criarNoGeral(leafs[0]);
+	var qntAlunos = 1;
+	for(var i = 1; i < leafs.length; i++){
 		if(leafs[i].parent.id_num != lastParentId){
 			lastParentId = leafs[i].parent.id_num;
-			noGeralDaVez = copiarObjecto(leafs[i]);
-			leafs[i].parent._children.push(noGeralDaVez);
+			calcularMediaNotas(noGeralDaVez, qntAlunos);
+			noGeralDaVez = criarNoGeral(leafs[i]);
+			qntAlunos = 0;
 		}
 		else{
-			for(var j = 1; j < leafs[i].depth-1; j++){
-			    if(isNaN(leafs[i]["Nota"+j])){
-					break;
-				}
-				noGeralDaVez["Nota"+j] += leafs[i]["Nota"+j];
-			}
+			inserirInformacoesNoGeral(noGeralDaVez, leafs[i]);
 		}
+		qntAlunos++;
 	}
 
-	function getNoGerais(node,nosGerais){
-		if(node.id_num == "noGeral")
-			nosGerais.push(node);
-		else {
-			for(var i = 0; i < node.children.length; i++)
-				getNoGerais(node.children[i], nosGerais);
-				for(var j = 0; j < node.children.length; j++)
-					getNoGerais(node._children[j], nosGerais)
-		}
+
+	//Cria um nó geral que inicialmente irá conter uma cópia das informações de atividades e notas do nó pasado como parâmetro
+	//O nó geral será inserido na lista de filhos ainda não exibido do pai do nó passado como parâmetro
+	function criarNoGeral(node) {
+ 		var noGeral = {};
+ 		for(var i = 1; node["Level"+i] != "" && node["Level"+i] != undefined; i++){
+ 			noGeral["Level"+i] = node["Level"+i];
+ 			noGeral["Nota"+i] = node["Nota"+i];
+ 		}
+ 		noGeral.parent = node.parent;
+ 		noGeral.id_num = "noGeral";
+ 		node.parent._children.push(noGeral);
+  		return noGeral;
 	}
 
-	function copiarObjecto(obj) {
- 		 if (obj === null || typeof obj !== 'object') {
-  		return obj;
-  		}
-  		var temp = obj.constructor();
-  		for (var key in obj) {
-  		temp[key] = copiarObjecto(obj[key]);
-  		}
-  		temp.id_num = "noGeral";
-  		temp.key = "";
-  		return temp;
+	function inserirInformacoesNoGeral(noGeral,node){
+		for(var i = 1; node["Level"+i] != "" && node["Level"+i] != undefined; i++){
+ 			noGeral["Nota"+i] += node["Nota"+i];
+ 		}
+	}
+
+	function calcularMediaNotas(noGeral, qntAlunos){
+		for(var i = 1; noGeral["Level"+i] != "" && noGeral["Level"+i] != undefined; i++){
+ 			noGeral["Nota"+i] = noGeral["Nota"+i]/qntAlunos;
+ 		}
 	}
 }
+
+function getNoGerais(node,nosGerais){
+	if(node.id_num == "noGeral")
+		nosGerais.push(node);
+	else {
+		for(var i = 0; i < node.children.length; i++)
+			getNoGerais(node.children[i], nosGerais);
+			for(var j = 0; j < node.children.length; j++)
+				getNoGerais(node._children[j], nosGerais)
+	}
+}
+
