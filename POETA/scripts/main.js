@@ -314,13 +314,29 @@ function sumNodesCopia(root) {
 
 function toggleNodes(d) {
         if (d.children) {
+          if(!detalhes)
             d._children = d.children;
             d.children = null;
         } else {
-            d.children = d._children;
-            d._children = null;
+            if(!detalhes) d.children = toggleNosGerais(d);
+            else {
+              d.children = d._children;
+              d._children = null;
+            }
         }
     }
+
+function toggleNosGerais(d){
+  var children = [];
+  d._children.forEach(function (d){
+    if(isLeaf(d)){
+      if(d.id_num == "noGeral") children.push(d);
+    }
+    else
+      children.push(d);
+  });
+  return children;
+}
 
 function toggleButtons(index) {
         d3.selectAll(".button").attr("class",function (d,i) { return (i==index) ? "button selected" : "button"; });
