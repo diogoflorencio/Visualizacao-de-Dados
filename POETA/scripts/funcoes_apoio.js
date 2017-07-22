@@ -166,7 +166,7 @@ function getLeafs(node,leafs){
 			node[campo[0]] = 0;
 			childrens = node.children;
 		}
-		else if(node._children){
+		if(node._children){
 			childrens = node._children;
 		}
 		if(childrens){
@@ -486,7 +486,7 @@ function createNosGerais(r){
  			noGeral["Nota"+i] = node["Nota"+i];
  		}
  		noGeral.parent = node.parent;
- 		noGeral.id_num = "noGeral";
+ 		noGeral.id_num = "noGeral"+node.id_num;
  		node.parent._children.push(noGeral);
   		return noGeral;
 	}
@@ -514,4 +514,3 @@ function getNoGerais(node,nosGerais){
 				getNoGerais(node._children[j], nosGerais)
 	}
 }
-

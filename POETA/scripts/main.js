@@ -324,7 +324,7 @@ function toggleNodes(d) {
             //exibe os nós folhas referentes aos alunos
             d._children.forEach(function (d){
                   if(isLeaf(d)){
-                      if(d.id_num != "noGeral") children.push(d);
+                      if(String(d.id_num).indexOf("noGeral") == -1) children.push(d);
                   }
                   else
                       children.push(d);
@@ -338,7 +338,7 @@ function toggleNosGerais(d){
   var children = [];
   d._children.forEach(function (d){
     if(isLeaf(d)){
-      if(d.id_num == "noGeral") children.push(d);
+      if(String(d.id_num).indexOf("noGeral") != -1) children.push(d);
     }
     else
       children.push(d);
