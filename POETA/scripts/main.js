@@ -313,19 +313,27 @@ function sumNodesCopia(root) {
 }
 
 function toggleNodes(d) {
-        if (d.children) {
-          if(!detalhes)
-            d._children = d.children;
+    if (d.children) {
+        if(!lastNode) d._children = d.children; // mantem o comportamento padrão de toggleNodes até o primeiro click
             d.children = null;
-        } else {
-            if(!detalhes) d.children = toggleNosGerais(d);
-            else {
-              d.children = d._children;
-              d._children = null;
-            }
+    }
+    else {
+        if(!detalhes) d.children = toggleNosGerais(d);
+        else {
+            var children = [];
+            //exibe os nós folhas referentes aos alunos
+            d._children.forEach(function (d){
+                  if(isLeaf(d)){
+                      if(d.id_num != "noGeral") children.push(d);
+                  }
+                  else
+                      children.push(d);
+              });
+              d.children = children;
         }
     }
-
+  }
+/*Exibe os nós folhas referentes aos caminhos*/
 function toggleNosGerais(d){
   var children = [];
   d._children.forEach(function (d){
