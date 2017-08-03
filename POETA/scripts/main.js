@@ -109,7 +109,7 @@ var m = [20, 120, 20, 120],
 	var dominioNotas = [1,5,10];
 	var escala = d3.scale.linear().range(cores);
 
-function main() {
+function main(db) {
 	escala.domain(dominio); //Parâmetro usado para definir a mudança de cores (Verde, Vermelho, amarelo)
 
 	escalaNota = d3.scale.linear().range(cores);
@@ -189,7 +189,7 @@ function main() {
               sair();
     });
 
-    d3.csv("data/DataBase.csv", function (csv) {
+    d3.csv("data/" + db, function (csv) {
 
         var data = [];
 
