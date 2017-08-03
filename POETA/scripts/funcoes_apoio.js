@@ -175,7 +175,7 @@ function getLeafs(node,leafs){
 			}
 		}
 		else{
-			if(node.id != "noGeral"){
+			if(typeof node.id_num !== "string" || (typeof node.id_num === "string" && node.id_num.indexOf("noGeral") === -1)) {
 				leafs.push(node);
 			}
 		}
