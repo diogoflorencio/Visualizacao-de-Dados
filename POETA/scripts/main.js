@@ -91,7 +91,7 @@ var m = [20, 120, 20, 120],
         w = 4280 - m[1] - m[3],
         h = 900 - m[0] - m[2],
         i = 0;
-    var root;
+  var root;
 	var raio = 10;
     var spendField = "sum_Federal";
     var sumFields = ["Federal", "GovXFer", "State", "Local"];
@@ -244,12 +244,22 @@ function main(db) {
                 toggleButtons(0);
                 detalhes = false;
                 setTextModoPesquisa();
+                root.children.forEach(function (d){
+                  toggleAll(d);
+                  toggleAll(d);
+                });
+                update(lastNode);
             });
 
             stateButton.on("click", function (d) {
                 toggleButtons(1);
                 detalhes = true;
                 setTextModoPesquisa();
+                root.children.forEach(function (d){
+                  toggleAll(d);
+                  toggleAll(d);
+                });
+                update(lastNode);
             });
 
             localButton.on("click", function (d) {
@@ -426,8 +436,8 @@ function update(source) {
             .on("click", function (d) {
 				        if(d.depth === 0) return;
                 if(d.depth === 1){ // expandir os filhos de uma turma
-				    toggleAll(d);
-                    update(d);
+				              toggleAll(d);
+                      update(d);
 				}
                 else {
                 	onClickNo(d);
