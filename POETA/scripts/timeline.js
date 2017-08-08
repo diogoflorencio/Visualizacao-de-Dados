@@ -47,7 +47,7 @@ for(var i = 0; i < filhos.length; i++){
 		console.log(fimAtvAtual);
 		console.log(fimProxAtv);
 
-		if(fimAtvAtual == "" || fimAtvAtual == undefined){ //Atividade não foi entregue
+		if(fimAtvAtual === '' || fimAtvAtual == undefined){ //Atividade não foi entregue
 			continue;
 		}
 
@@ -59,7 +59,7 @@ for(var i = 0; i < filhos.length; i++){
 			inicioAtvAtual = converteData(filhos[i]["Data Inicio "+j]);
 		}
 
-		if((fimProxAtv !== "" && fimProxAtv !== undefined) && j < d.depth-1 && converteData(inicioProxAtv) <= converteData(fimAtvAtual)){
+		if((fimProxAtv !== '' && fimProxAtv !== undefined) && j < d.depth-1 && converteData(inicioProxAtv) <= converteData(fimAtvAtual)){
 			fimAtvAnterior = makeDataWithTime(limiteAtvAtual);
 			limiteAtvAtual = filhos[i]["Data Inicio "+(j+1)];
 

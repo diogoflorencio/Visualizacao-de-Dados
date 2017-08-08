@@ -346,8 +346,8 @@ function exibirEntregas(){
 			var filhos = [];
 			var node = lastNode;
 			getLeafs(node, filhos);
-			var inicioAtv = filhos[0]["Data Inicio " + lastNode.depth];
-			var fimAtv = filhos[0]["Data Fim "+lastNode.depth];
+			var inicioAtv = filhos[0]["Data Inicio " + (lastNode.depth-1)];
+			var fimAtv = filhos[0]["Data Fim "+(lastNode.depth-1)];
 			var em_dia = 0, atrasados = 0, nao_entregaram = 0;
 
 			document.getElementById("quadro_1").innerText = "No prazo";
@@ -358,8 +358,8 @@ function exibirEntregas(){
 
 			for(var i = 0; i < filhos.length; i++){
 				var filhoAtual = filhos[i];
-				if(!filhoAtual["Data Fim "+lastNode.depth]) nao_entregaram++;
-				else if(converteData(filhoAtual["Data Fim "+lastNode.depth]) <= converteData(fimAtv)) em_dia++;
+				if(''=== filhoAtual["Data Fim "+(lastNode.depth-1)]) nao_entregaram++;
+				else if(converteData(filhoAtual["Data Fim "+(lastNode.depth-1)]) <= converteData(fimAtv)) em_dia++;
 				else  atrasados ++;
 			}
 
@@ -483,7 +483,9 @@ function createNosGerais(r){
  		var noGeral = {};
  		for(var i = 1; node["Level"+i] != "" && node["Level"+i] != undefined; i++){
  			noGeral["Level"+i] = node["Level"+i];
- 			noGeral["Nota"+i] = node["Nota"+i];
+			if(!parseInt(node["Nota"+i])) noGeral["Nota"+i] 	= 0;
+			else
+ 				noGeral["Nota"+i] = node["Nota"+i];
  		}
  		noGeral.parent = node.parent;
  		noGeral.id_num = "noGeral"+node.id_num;
@@ -493,7 +495,9 @@ function createNosGerais(r){
 
 	function inserirInformacoesNoGeral(noGeral,node){
 		for(var i = 1; node["Level"+i] != "" && node["Level"+i] != undefined; i++){
- 			noGeral["Nota"+i] += node["Nota"+i];
+			if(!parseInt(node["Nota"+i])) noGeral["Nota"+i] += 0;
+			else
+ 				noGeral["Nota"+i] += node["Nota"+i];
  		}
 	}
 
