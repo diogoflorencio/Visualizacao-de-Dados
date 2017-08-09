@@ -249,6 +249,7 @@ function main(db) {
                   toggleAll(d);
                 });
                 update(lastNode);
+                circuloNoGeral(root);
             });
 
             stateButton.on("click", function (d) {
