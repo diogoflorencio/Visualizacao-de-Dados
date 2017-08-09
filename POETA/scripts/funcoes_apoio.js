@@ -490,6 +490,7 @@ function createNosGerais(r){
  		noGeral.parent = node.parent;
  		noGeral.id_num = "noGeral"+node.id_num;
  		node.parent._children.push(noGeral);
+ 		
   		return noGeral;
 	}
 
@@ -508,13 +509,19 @@ function createNosGerais(r){
 	}
 }
 
-function getNoGerais(node,nosGerais){
-	if(node.id_num == "noGeral")
+function getNosGerais(node,nosGerais){
+	if(String(node.id_num).indexOf("noGeral") !== -1){
 		nosGerais.push(node);
+	}
 	else {
-		for(var i = 0; i < node.children.length; i++)
-			getNoGerais(node.children[i], nosGerais);
-			for(var j = 0; j < node.children.length; j++)
-				getNoGerais(node._children[j], nosGerais)
+		if(node.children){
+			for(var i = 0; i < node.children.length; i++)
+				getNosGerais(node.children[i], nosGerais);
+		}
+		
+		if(node._children){
+			for(var j = 0; j < node._children.length; j++)
+				getNosGerais(node._children[j], nosGerais)
+		}
 	}
 }
