@@ -490,7 +490,7 @@ function createNosGerais(r){
  		noGeral.parent = node.parent;
  		noGeral.id_num = "noGeral"+node.id_num;
  		node.parent._children.push(noGeral);
- 		
+
   		return noGeral;
 	}
 
@@ -519,4 +519,15 @@ function getNosGerais(node,nosGerais){
 				getNosGerais(node.children[i], nosGerais);
 		}
 	}
+}
+
+function circuloNoGeral(d){
+	var nosGerais = [];
+	getNosGerais(d, nosGerais);
+	for(var i = 0; i < nosGerais.length; i++){
+			d3.select(document.getElementById("node_"+nosGerais[i].id_num)).append("svg:circle")
+			.attr("r", "10")
+			.style("fill-opacity", "1")
+			.style("stroke", "#000000");
+		}
 }

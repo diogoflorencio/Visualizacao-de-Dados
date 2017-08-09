@@ -435,18 +435,10 @@ function update(source) {
             .on("click", function (d) {
 				        if(d.depth === 0) return;
                 if(d.depth === 1){ // expandir os filhos de uma turma
-				      toggleAll(d);
+				              toggleAll(d);
                       update(d);
-                      var nosGerais = [];
-	    			  getNosGerais(d, nosGerais);
-
-	    				for(var i = 0; i < nosGerais.length; i++){
-	    				d3.select(document.getElementById("node_"+nosGerais[i].id_num)).append("svg:circle")
-            			.attr("r", "10")
-            			.style("fill-opacity", "1")
-	            		.style("stroke", "#000000");
-	        		}
-				}
+                      circuloNoGeral(d);
+				        }
                 else {
                 	onClickNo(d);
                 }
