@@ -518,10 +518,5 @@ function getNosGerais(node,nosGerais){
 			for(var i = 0; i < node.children.length; i++)
 				getNosGerais(node.children[i], nosGerais);
 		}
-		
-		if(node._children){
-			for(var j = 0; j < node._children.length; j++)
-				getNosGerais(node._children[j], nosGerais)
-		}
 	}
 }
