@@ -35,12 +35,13 @@ function criarGrafBarras(){
 }
 
 function desenharGrafBarras(d){
+      document.getElementById("headAluno").innerText = "Média das notas - " + (d.parent._children.length -1) + " Aluno(s)";
 			var data = converteDados(d);
 				grafBarra.call(tip);
-				
+
 					x.domain(data.map(function(d) { return d.atv; }));
 					y.domain([0, 10]);
-					
+
 					grafBarra.append("g")
 					.attr("class", "x axis")
 					.attr("transform", "translate(0," + height + ")")
@@ -49,7 +50,7 @@ function desenharGrafBarras(d){
 					grafBarra.append("g")
 					.attr("class", "y axis")
 					.call(yAxis);
-					
+
 					grafBarra.selectAll(".bar")
 					.data(data)
 					.enter().append("rect")
