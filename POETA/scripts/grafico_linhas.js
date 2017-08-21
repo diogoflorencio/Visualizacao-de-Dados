@@ -13,15 +13,19 @@ function geraGraficoLinhas(node){
 	}
 	
 	var matrix = [];
-	for(var i = 0; i < node.depth; i++){
-		matrix[i] = [];
-	}
+  matrix[0] = [];
 	
 	var aux = node;
 	for(var i = node.depth; i > 1; i--){
-		matrix[i-1][0] = aux.key;
+		//matrix[i-1][0] = aux.key;
 		for(var j = 0; j < alunos.length; j++){
-			matrix[i-1][j+1] = alunos[j]["Nota"+(i-1)]
+      if(alunos[j]["Nota"+(i-1)] !== -1 && matrix[i-1] == undefined){
+        matrix[i-1] = [];
+        matrix[i-1][0] = aux.key;
+      }
+      if(alunos[j]["Nota"+(i-1)] !== -1){
+        matrix[i-1][j+1] = alunos[j]["Nota"+(i-1)];
+      }
 		}
 		aux = aux.parent  
 	}
@@ -29,6 +33,12 @@ function geraGraficoLinhas(node){
 	for(var i = 0; i < alunos.length; i++){
 		matrix[0][i+1] = 0;
 	}
+  for(var i = matrix.length-1; i >= 0; i--){
+    if(matrix[i] == undefined){
+      matrix.splice(i,i);
+    }
+  }
+
       data.addRows(matrix);
 
       var options = {
