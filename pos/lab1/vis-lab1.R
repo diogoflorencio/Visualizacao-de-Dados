@@ -5,14 +5,16 @@ papers <- read.csv("papers.csv")
 conferences <- read.csv("conferences.csv")
 ethnicity <- read.csv("ethnicity.csv")
 
-pub_year <- papers %>% select(paper_key, conf_key) %>% group_by(paper_key) %>% merge(conferences) %>% 
-          select(year) %>% group_by(year) %>% count()
+pub_gender <- merge(papers, authors) %>% merge(ethnicity) %>%
+       select(global_key, gender) %>% 
+       filter(gender %in% c("M", "F")) %>% 
+       group_by(global_key, gender) %>% count(gender) %>% summarise(qtd = n)
 
-conf_year <- papers %>% select(paper_key, conf_key) %>% group_by(paper_key) %>% merge(conferences) %>% 
-  select(global_key) %>% group_by(global_key) %>% count() %>% ungroup() %>% top_n(10)
+pub_time <- merge(authors, papers) %>% select(name_author, conf_key) %>%
+            merge(conferences) %>% select(name_author, year) %>%
+            merge(ethnicity) %>% select(gender, year)  %>% 
+            filter(gender %in% c("M", "F")) %>% 
+            group_by(year, gender) %>% count(gender) %>% summarise(qtd = n)
 
-author_pub <- authors %>% select(name_author) %>% group_by(name_author) %>% count() %>% ungroup() %>% top_n(10)
-
-write.csv (pub_year, file = "pub_year.csv")
-write.csv (conf_year, file = "conf_year.csv")
-write.csv (author_pub, file = "author_pub.csv")
+write.csv (pub_gender, file = "pub_gender.csv")
+write.csv (pub_time, file = "pub_time.csv")
