@@ -11,4 +11,5 @@ bigMac <-mutate(bigMac, price_dollar = local_price/dollar_ex) %>%
 bigMac <- bigMac%>%
           group_by(name) %>%
           mutate(var_perc = 100 * (price_dollar - lag(price_dollar))/lag(price_dollar)) %>%
-          select(name, var_perc)
+          filter(format(as.Date(date),"%Y")!=2000)
+write.csv(bigMac, file = "bigMac.csv")
