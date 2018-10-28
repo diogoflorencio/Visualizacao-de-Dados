@@ -3,10 +3,10 @@ library(lubridate)
 bigMac <- read.csv("big-mac-source-data.csv")
 bigMac <-mutate(bigMac, price_dollar = local_price/dollar_ex) %>%
          select(name, price_dollar, date) %>%
-         filter(name %in% c("Switzerland", "Norway", "Sweden", "United States",
-                            "Canada", "Brazil", "Denmark", "Australia", "New Zealand",
-                            "Britain", "Czech Republic", "Japan", "China", "Poland",
-                            "Turkey", "Russia", "South Africa"))
+         filter(name %in% c("Norway", "Sweden", "United States",
+                            "Canada", "Brazil", "Denmark", 
+                            "New Zealand", "Czech Republic", "China", 
+                            "Turkey", "Russia"))
 
 bigMac <- bigMac%>%
           group_by(name) %>%
