@@ -1,0 +1,7 @@
+library(tidyverse)
+stackoverflow <- read.csv("dados stackoverflow.csv")
+stackoverflow$site <- c("stackoverflow")
+superuser <- read.csv("dados superuser.csv")
+superuser$site <- c("superuser")
+data <- merge(stackoverflow, superuser, all = T)
+write.csv(data, file = "redesing-2-data.csv")
