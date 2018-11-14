@@ -21,5 +21,6 @@ dist_grad <- enade_pb %>%
         filter(QE_I21 == "A") %>%
         select(CO_CATEGAD, QE_I15, percentual_grad)
 
-dados <- merge(dist_cotas, dist_grad)    
+dados <- merge(dist_cotas, dist_grad) %>%
+         mutate(percentual_grad = percentual_grad*percentual_aluno)
 write.csv (dados, file = "dados-lab2-vis-1.csv")
