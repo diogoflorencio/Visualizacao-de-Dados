@@ -24,3 +24,14 @@ dist_grad <- enade_pb %>%
 dados <- merge(dist_cotas, dist_grad) %>%
          mutate(percentual_grad = percentual_grad*percentual_aluno)
 write.csv (dados, file = "dados-lab2-vis-1.csv")
+
+# terceira visualização
+moda <- function(x) {
+  z <- table(as.vector(x)); names(z)[z == max(z)]
+}
+dados2 <- read.csv("enade_2017_pb.csv")
+dados2 <- select(dados2, CO_CATEGAD, NU_IDADE, NT_GER, QE_I08, QE_I27) %>% na.exclude() %>%
+            group_by(CO_CATEGAD) %>%
+            summarise(idade = median(NU_IDADE), nota = median(NT_GER), 
+                      renda = moda(QE_I08), satisfacao = median(QE_I27))
+write.csv (dados2, file = "dados-lab2-vis-3.csv")
