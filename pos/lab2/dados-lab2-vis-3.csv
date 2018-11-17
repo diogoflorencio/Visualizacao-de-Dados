@@ -1,5 +1,5 @@
-"","CO_CATEGAD","idade","nota","renda","satisfacao"
-"1",1,25,46.1,"A",5
-"2",2,26,41.7,"A",5
-"3",4,25,43.1,"B",6
-"4",5,33,42.1,"B",6
+,CO_CATEGAD,idade,nota,renda,satisfacao
+1,Pública Federal,25,46.1,A,5
+2,Pública Estadual,26,41.7,A,5
+3,Privada com fins lucrativos,25,43.1,B,6
+4,Privada sem fins lucrativos,33,42.1,B,6
