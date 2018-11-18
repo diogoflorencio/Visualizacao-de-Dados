@@ -1,33 +1,33 @@
 ,QE_I02,QE_I08,percentual_aluno
-1,Branca," Até 1,5 salário mínimo (até R$ 1.405,50)",0.287117046347211
-2,Branca,"De 1,5 a 3 salários mínimos (R$ 1.405,51 a R$ 2.811,00)",0.282010997643362
-3,Branca,"De 3 a 4,5 salários mínimos (R$ 2.811,01 a R$ 4.216,50)",0.168106834249804
-4,Branca,"De 4,5 a 6 salários mínimos (R$ 4.216,51 a R$ 5.622,00)",0.077376276512176
-5,Branca,"De 6 a 10 salários mínimos (R$ 5. 622,01 a R$ 9.370,00)",0.0974076983503535
-6,Branca,"De 10 a 30 salários mínimos (R$ 9.370,01 a R$ 28.110,00)",0.079732914375491
-7,Branca,"Acima de 30 salários mínimos (mais de R$ 28.110,00)",0.00824823252160251
-8,Preta," Até 1,5 salário mínimo (até R$ 1.405,50)",0.444067796610169
-9,Preta,"De 1,5 a 3 salários mínimos (R$ 1.405,51 a R$ 2.811,00)",0.31864406779661
-10,Preta,"De 3 a 4,5 salários mínimos (R$ 2.811,01 a R$ 4.216,50)",0.128813559322034
-11,Preta,"De 4,5 a 6 salários mínimos (R$ 4.216,51 a R$ 5.622,00)",0.0372881355932203
-12,Preta,"De 6 a 10 salários mínimos (R$ 5. 622,01 a R$ 9.370,00)",0.0440677966101695
-13,Preta,"De 10 a 30 salários mínimos (R$ 9.370,01 a R$ 28.110,00)",0.023728813559322
-14,Preta,"Acima de 30 salários mínimos (mais de R$ 28.110,00)",0.00338983050847458
-15,Amarela," Até 1,5 salário mínimo (até R$ 1.405,50)",0.420408163265306
-16,Amarela,"De 1,5 a 3 salários mínimos (R$ 1.405,51 a R$ 2.811,00)",0.253061224489796
-17,Amarela,"De 3 a 4,5 salários mínimos (R$ 2.811,01 a R$ 4.216,50)",0.118367346938776
-18,Amarela,"De 4,5 a 6 salários mínimos (R$ 4.216,51 a R$ 5.622,00)",0.0693877551020408
-19,Amarela,"De 6 a 10 salários mínimos (R$ 5. 622,01 a R$ 9.370,00)",0.0897959183673469
-20,Amarela,"De 10 a 30 salários mínimos (R$ 9.370,01 a R$ 28.110,00)",0.0448979591836735
-21,Amarela,"Acima de 30 salários mínimos (mais de R$ 28.110,00)",0.00408163265306122
-22,Parda," Até 1,5 salário mínimo (até R$ 1.405,50)",0.425551756294685
-23,Parda,"De 1,5 a 3 salários mínimos (R$ 1.405,51 a R$ 2.811,00)",0.305564190239353
-24,Parda,"De 3 a 4,5 salários mínimos (R$ 2.811,01 a R$ 4.216,50)",0.133043207957725
-25,Parda,"De 4,5 a 6 salários mínimos (R$ 4.216,51 a R$ 5.622,00)",0.0553310537768107
-26,Parda,"De 6 a 10 salários mínimos (R$ 5. 622,01 a R$ 9.370,00)",0.0531551134597451
-27,Parda,"De 10 a 30 salários mínimos (R$ 9.370,01 a R$ 28.110,00)",0.0248678893378924
-28,Parda,"Acima de 30 salários mínimos (mais de R$ 28.110,00)",0.00248678893378924
-29,Indígena," Até 1,5 salário mínimo (até R$ 1.405,50)",0.636363636363636
-30,Indígena,"De 1,5 a 3 salários mínimos (R$ 1.405,51 a R$ 2.811,00)",0.204545454545455
-31,Indígena,"De 3 a 4,5 salários mínimos (R$ 2.811,01 a R$ 4.216,50)",0.113636363636364
-32,Indígena,"De 6 a 10 salários mínimos (R$ 5. 622,01 a R$ 9.370,00)",0.0454545454545455
+1,Branca,"Até 1,5 salário mínimo",0.287117046347211
+2,Branca,"De 1,5 a 3 salários mínimos",0.282010997643362
+3,Branca,"De 3 a 4,5 salários mínimos",0.168106834249804
+4,Branca,"De 4,5 a 6 salários mínimos",0.077376276512176
+5,Branca,De 6 a 10 salários mínimos,0.0974076983503535
+6,Branca,De 10 a 30 salários mínimos,0.079732914375491
+7,Branca,Acima de 30 salários mínimos,0.00824823252160251
+8,Preta,"Até 1,5 salário mínimo",0.444067796610169
+9,Preta,"De 1,5 a 3 salários mínimos",0.31864406779661
+10,Preta,"De 3 a 4,5 salários mínimos",0.128813559322034
+11,Preta,"De 4,5 a 6 salários mínimos",0.0372881355932203
+12,Preta,De 6 a 10 salários mínimos,0.0440677966101695
+13,Preta,De 10 a 30 salários mínimos,0.023728813559322
+14,Preta,Acima de 30 salários mínimos,0.00338983050847458
+15,Amarela,"Até 1,5 salário mínimo",0.420408163265306
+16,Amarela,"De 1,5 a 3 salários mínimos",0.253061224489796
+17,Amarela,"De 3 a 4,5 salários mínimos",0.118367346938776
+18,Amarela,"De 4,5 a 6 salários mínimos",0.0693877551020408
+19,Amarela,De 6 a 10 salários mínimos,0.0897959183673469
+20,Amarela,De 10 a 30 salários mínimos,0.0448979591836735
+21,Amarela,Acima de 30 salários mínimos,0.00408163265306122
+22,Parda,"Até 1,5 salário mínimo",0.425551756294685
+23,Parda,"De 1,5 a 3 salários mínimos",0.305564190239353
+24,Parda,"De 3 a 4,5 salários mínimos",0.133043207957725
+25,Parda,"De 4,5 a 6 salários mínimos",0.0553310537768107
+26,Parda,De 6 a 10 salários mínimos,0.0531551134597451
+27,Parda,De 10 a 30 salários mínimos,0.0248678893378924
+28,Parda,Acima de 30 salários mínimos,0.00248678893378924
+29,Indígena,"Até 1,5 salário mínimo",0.636363636363636
+30,Indígena,"De 1,5 a 3 salários mínimos",0.204545454545455
+31,Indígena,"De 3 a 4,5 salários mínimos",0.113636363636364
+32,Indígena,De 6 a 10 salários mínimos,0.0454545454545455
