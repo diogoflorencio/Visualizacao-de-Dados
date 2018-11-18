@@ -35,3 +35,13 @@ dados2 <- select(dados2, CO_CATEGAD, NU_IDADE, NT_GER, QE_I08, QE_I27) %>% na.ex
             summarise(idade = median(NU_IDADE), nota = median(NT_GER), 
                       renda = moda(QE_I08), satisfacao = median(QE_I27))
 write.csv (dados2, file = "dados-lab2-vis-3.csv")
+
+#4º visualização
+enade_pb <- read.csv("enade_2017_pb.csv")
+enade_pb <- select(enade_pb, QE_I02, QE_I08) %>% 
+            group_by(QE_I02, QE_I08) %>%
+            summarise(contagem = dplyr::n()) %>% 
+            mutate(percentual_aluno = contagem / sum(contagem))%>%
+            select(QE_I02, QE_I08, percentual_aluno)
+
+write.csv (enade_pb, file = "rendaXetnia.csv")
