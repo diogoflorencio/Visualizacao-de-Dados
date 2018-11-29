@@ -1,0 +1,29 @@
+library(tidyverse)
+
+data <- read.csv("domicilio-sp-utf8.csv") 
+
+data$V062 <- as.numeric(levels(data$V062))[data$V062]
+data$V063 <- as.numeric(levels(data$V063))[data$V063]
+data$V064 <- as.numeric(levels(data$V064))[data$V064]
+data$V065 <- as.numeric(levels(data$V065))[data$V065]
+data$V066 <- as.numeric(levels(data$V066))[data$V066]
+data$V067 <- as.numeric(levels(data$V067))[data$V067]
+data$V068 <- as.numeric(levels(data$V068))[data$V068]
+
+data <- data %>% mutate(H = V062 + V063 + V064 + V065 + V066 + V067 + V068)
+
+data$V081 <- as.numeric(levels(data$V081))[data$V081]
+data$V082 <- as.numeric(levels(data$V082))[data$V082]
+data$V083 <- as.numeric(levels(data$V083))[data$V083]
+data$V084 <- as.numeric(levels(data$V084))[data$V084]
+data$V085 <- as.numeric(levels(data$V085))[data$V085]
+data$V086 <- as.numeric(levels(data$V086))[data$V086]
+data$V087 <- as.numeric(levels(data$V087))[data$V087]
+
+data <- data %>% mutate(M = V081 + V082 + V083 + V084 + V085 + V086 + V087)
+
+data$domicilio <- "Homem"     
+data$domicilio[data$M > data$H ] <- "Mulher"
+data <- data %>% select(Cod_setor, domicilio)
+
+write.csv (data, file = "domicilio_hxm.csv")
