@@ -61,7 +61,7 @@
         var dataNode = "termos";
         var dataLink = "links_termos";
         var click = true
-        d3.json("volume.json", function (error, graph) {
+        d3.json("https://raw.githubusercontent.com/diogoflorencio/Visualizacao-de-Dados/master/buzzmonitor/volume.json", function (error, graph) {
 
             var linkedByIndex = {};
             graph[dataLink].forEach(function (d) {

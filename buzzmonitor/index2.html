@@ -61,7 +61,7 @@
         var dataNode = "nodes";
         var dataLink = "links";
         var click = true
-        d3.json("got_social_graph.json", function (error, graph) {
+        d3.json("https://raw.githubusercontent.com/diogoflorencio/Visualizacao-de-Dados/master/buzzmonitor/got_social_graph.json", function (error, graph) {
 
             var linkedByIndex = {};
             graph[dataLink].forEach(function (d) {
