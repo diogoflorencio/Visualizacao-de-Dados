@@ -1,0 +1,29 @@
+{
+"graph": [],
+
+
+"panels":[
+	{"panel":"panel_a", "size":10, "score":0},
+	{"panel":"panel_b", "size":5,  "score":0},
+	{"panel":"panel_c", "size":40, "score":4},
+	{"panel":"panel_d", "size":1,  "score":2},
+	{"panel":"panel_e", "size":1,  "score":2},
+	{"panel":"panel_f", "size":30, "score":0},
+	{"panel":"panel_g", "size":1,  "score":3}
+    ],
+
+"links_panels":[
+	{"source":1,"target":0,"weight":5},
+	{"source":2,"target":0,"weight":5},
+	{"source":2,"target":1,"weight":5},
+	{"source":3,"target":0,"weight":15},
+	{"source":3,"target":4,"weight":5},
+	{"source":5,"target":4,"weight":20},
+	{"source":5,"target":6,"weight":20},
+	{"source":5,"target":0,"weight":2},
+	{"source":6,"target":3,"weight":5},
+	{"source":6,"target":4,"weight":5},
+	{"source":6,"target":2,"weight":5}
+	]
+
+}
