@@ -13,17 +13,17 @@
     ],
 
 "links_panels":[
-	{"source":"panel_a","target":"panel_a","weight":5},
-	{"source":"panel_b","target":"panel_a","weight":5},
-	{"source":"panel_b","target":"panel_b","weight":5},
-	{"source":"panel_c","target":"panel_a","weight":15},
-	{"source":"panel_c","target":"panel_d","weight":5},
-	{"source":"panel_e","target":"panel_d","weight":20},
-	{"source":"panel_e","target":"panel_f","weight":20},
-	{"source":"panel_e","target":"panel_a","weight":2},
-	{"source":"panel_f","target":"panel_c","weight":5},
-	{"source":"panel_f","target":"panel_d","weight":5},
-	{"source":"panel_f","target":"panel_c","weight":5}
+	{"source":1,"target":0,"weight":5},
+	{"source":2,"target":0,"weight":5},
+	{"source":2,"target":1,"weight":5},
+	{"source":3,"target":0,"weight":15},
+	{"source":3,"target":4,"weight":5},
+	{"source":5,"target":4,"weight":20},
+	{"source":5,"target":6,"weight":20},
+	{"source":5,"target":0,"weight":2},
+	{"source":6,"target":3,"weight":5},
+	{"source":6,"target":4,"weight":5},
+	{"source":6,"target":2,"weight":5}
 	]
 
 }
